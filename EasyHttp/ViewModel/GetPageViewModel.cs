@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,100 +15,101 @@ namespace EasyHttp.ViewModel
     [AddINotifyPropertyChangedInterface]
     public class GetPageViewModel
     {
+        public Command AddHeaderCommand { get; set; }
+        public Command RemoveHeaderCommand { get; set; }
         public Command AddParmCommand { get; set; }
-        public Command RequestCommand { get; set; }
         public Command RemoveParmCommand { get; set; }
+        public Command RequestCommand { get; set; }
+        public Command CancelCommand { get; set; }
+        //请求头
         public ObservableCollection<KeyValue> Headers { get; set; }
-        private ObservableCollection<KeyValue> parameters;
-        public ObservableCollection<KeyValue> Parameters
-        {
-            get => parameters;
-            set
-            {
-                parameters = value;
-                var parmstr = Url.Split('?');
-                if (parmstr.Length <= 0) Url= "?";
-                
-                foreach (var item in value)
-                {
-                    if (string.IsNullOrEmpty(item.KeyParm)) continue;
-                    if (parmstr.Length == 1)
-                        Url= $"{Url}{item.KeyParm}={item.ValueParm}";
-                    else Url = $"{Url}&{item.KeyParm}={item.ValueParm}";
-                }
-            }
-        }
-        private string url=string.Empty;
-        public string Url
-        {
-            get => url;
-            set
-            {
-                url = value;
-                var parmstr = value.Split('?');
-                if (parmstr.Length <= 1) return;
-                var parms = parmstr[1].Split('&');
-                Parameters = new ObservableCollection<KeyValue>();
-                foreach (var item in parms)
-                {
-                    if (string.IsNullOrEmpty(item)) continue;
-                    if (item.Split('=').Length < 2) continue;
-                    Parameters.Add(new KeyValue() { KeyParm = item.Split('=')[0], ValueParm = item.Split('=')[1] });
-                }
-            }
-        }
+        //请求参数
+        public ObservableCollection<KeyValue> Parameters { get; set; }
+        //请求地址
+        public string Url { get; set; } = string.Empty;
+        public Visibility ShowPro { get; set; } = Visibility.Collapsed;
+        private Http _http { get; set; }
+
         public GetPageViewModel()
         {
+            AddHeaderCommand = new Command(AddHeader);
+            RemoveHeaderCommand = new Command(RemoveHeader);
             AddParmCommand = new Command(AddParm);
             RemoveParmCommand = new Command(RemoveParm);
             RequestCommand = new Command(Request);
-            Headers = new ObservableCollection<KeyValue>() { new KeyValue() };
+            CancelCommand = new Command(Cancel);
+            Headers = new ObservableCollection<KeyValue>()
+            {
+                new KeyValue() {Key="ContentType",Value="application/json"},
+                new KeyValue() {Key="Authorization",Value="Bearer "}
+            };
             Parameters = new ObservableCollection<KeyValue>() { new KeyValue() };
         }
-
-        private async void Request(object obj)
+        /// <summary>
+        /// 取消请求
+        /// </summary>
+        /// <param name="obj"></param>
+        private void Cancel(object obj)
         {
-            Dictionary<string, string> dic = new Dictionary<string, string>();
-            foreach (var item in Headers)
+            if (_http.Cancel())
             {
-                dic.Add(item.KeyParm, item.ValueParm);
+                ShowPro = Visibility.Collapsed;
             }
-            var jsonStr = JsonConvert.SerializeObject(dic);
-            Parm parm = default;
-            try
+            else
             {
-                parm = JsonConvert.DeserializeObject<Parm>(jsonStr);
+                MessageBox.Show("取消失败，请稍后");
             }
-            catch (Exception)
-            {
-                MessageBox.Show("Key错误!");
-            }
-
-            Http http = new Http(parm);
-            var result = await http.GetAsync(Url);
         }
 
-        private void RemoveParm(object obj)
+        /// <summary>
+        /// 移除头
+        /// </summary>
+        /// <param name="obj"></param>
+        private void RemoveHeader(object obj)
         {
             Headers.Remove((KeyValue)obj);
         }
-
-        private void AddParm(object obj)
+        /// <summary>
+        /// 添加头
+        /// </summary>
+        /// <param name="obj"></param>
+        private void AddHeader(object obj)
         {
             Headers.Add(new KeyValue());
+        }
+        /// <summary>
+        /// 删除参数
+        /// </summary>
+        /// <param name="obj"></param>
+        private void RemoveParm(object obj)
+        {
+            Parameters.Remove((KeyValue)obj);
+        }
+        /// <summary>
+        /// 添加参数
+        /// </summary>
+        /// <param name="obj"></param>
+        private void AddParm(object obj)
+        {
+            Parameters.Add(new KeyValue());
+        }
+        /// <summary>
+        /// 请求
+        /// </summary>
+        /// <param name="obj"></param>
+        private async void Request(object obj)
+        {
+            ShowPro = Visibility.Visible;
+            _http = new Http(Url, Headers.Count > 0 ? Headers : null, Parameters.Count > 0 ? Parameters : null);
+            var result = await _http.GetAsync();
+            MessageBox.Show(result);
+            ShowPro = Visibility.Collapsed;
         }
     }
     [AddINotifyPropertyChangedInterface]
     public class KeyValue
     {
-        public string KeyParm { get; set; }
-        public string ValueParm { get; set; }
-    }
-    [AddINotifyPropertyChangedInterface]
-    public class Parm
-    {
-        public string ContentType { get; set; } = "application/json";
-        public string Token { get; set; }
-
+        public string Key { get; set; }
+        public string Value { get; set; }
     }
 }

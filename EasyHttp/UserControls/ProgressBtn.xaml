@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="EasyHttp.UserControls.ProgressBtn"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EasyHttp.UserControls"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d" >
+    
+    <StackPanel VerticalAlignment="Center">
+        
+        <hc:LoadingLine DotSpeed="1.5" DotCount="5" DotDiameter="5" Foreground="BlueViolet" Style="{StaticResource LoadingLineLarge}"/>
+        <Button HorizontalAlignment="Center" Background="Transparent" BorderBrush="#036BCA" Margin="10" Width="50" Height="25"
+                Content="{Binding Path=BtnContent, RelativeSource= {RelativeSource AncestorType={x:Type local:ProgressBtn }},Mode=TwoWay}"
+                Command="{Binding Path=BtnCommand, RelativeSource= {RelativeSource AncestorType={x:Type local:ProgressBtn }},Mode=TwoWay}"
+                VerticalAlignment="Top"/>
+    </StackPanel>
+</UserControl>
