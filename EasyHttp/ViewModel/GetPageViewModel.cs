@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using EasyHttp.Util;
+using EasyHttp.View;
 using Newtonsoft.Json;
 using PropertyChanged;
 
@@ -102,7 +103,10 @@ namespace EasyHttp.ViewModel
             ShowPro = Visibility.Visible;
             _http = new Http(Url, Headers.Count > 0 ? Headers : null, Parameters.Count > 0 ? Parameters : null);
             var result = await _http.GetAsync();
-            MessageBox.Show(result);
+            ResponseWindow responseWindow = new ResponseWindow(_http.Response);
+            responseWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            responseWindow.ShowDialog();
+            //MessageBox.Show(result);
             ShowPro = Visibility.Collapsed;
         }
     }

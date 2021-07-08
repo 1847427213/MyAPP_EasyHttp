@@ -67,6 +67,10 @@ namespace EasyHttp.Util
                 else Request = Response.ToString();
                 return Request;
             }
+            catch (TaskCanceledException)
+            {
+                return "Task取消成功";
+            }
             catch (Exception e)
             {
                 return e.Message;
