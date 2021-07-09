@@ -113,6 +113,15 @@ namespace EasyHttp.ViewModel
     [AddINotifyPropertyChangedInterface]
     public class KeyValue
     {
+        public KeyValue()
+        { 
+        
+        }
+        public KeyValue(string Key, string Value)
+        {
+            this.Key = Key;
+            this.Value = Value;
+        }
         public string Key { get; set; }
         public string Value { get; set; }
     }

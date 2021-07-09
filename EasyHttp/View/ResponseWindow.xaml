@@ -13,7 +13,12 @@
                 <TextBox IsReadOnly="True" BorderBrush="Gray" Text="{Binding Response}" SnapsToDevicePixels="True" VerticalContentAlignment="Top" TextWrapping="Wrap"/>
             </TabItem>
             <TabItem Header="Content">
-                <TextBox IsReadOnly="True" BorderBrush="Gray" Text="{Binding Content}" SnapsToDevicePixels="True" VerticalContentAlignment="Top" TextWrapping="Wrap"/>
+                <Grid>
+                    <TextBox IsReadOnly="True" Visibility="{Binding ShowJson}" BorderBrush="Gray" Text="{Binding Content}" SnapsToDevicePixels="True" VerticalContentAlignment="Top" TextWrapping="Wrap"/>
+                    <Grid Visibility="{Binding ShowFile}">
+                        <hc:ImageViewer ShowImgMap="True" IsFullScreen="True"  Background="{DynamicResource SecondaryRegionBrush}" ImageSource="{Binding ImageSource}"/>
+                    </Grid>
+                </Grid>
             </TabItem>
             <TabItem Header="Request">
                 <TextBox IsReadOnly="True" BorderBrush="Gray" Text="{Binding Request}" SnapsToDevicePixels="True" VerticalContentAlignment="Top" TextWrapping="Wrap"/>
