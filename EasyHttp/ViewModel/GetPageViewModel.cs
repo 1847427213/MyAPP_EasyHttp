@@ -23,6 +23,7 @@ namespace EasyHttp.ViewModel
         public Command RequestCommand { get; set; }
         public Command CancelCommand { get; set; }
         //请求头
+        public ObservableCollection<string> a { get; set; }
         public ObservableCollection<KeyValue> Headers { get; set; }
         //请求参数
         public ObservableCollection<KeyValue> Parameters { get; set; }
@@ -45,6 +46,7 @@ namespace EasyHttp.ViewModel
                 new KeyValue() {Key="Authorization",Value="Bearer "}
             };
             Parameters = new ObservableCollection<KeyValue>() { new KeyValue() };
+            a = new ObservableCollection<string>() { "1", "2", "3" };
         }
         /// <summary>
         /// 取消请求

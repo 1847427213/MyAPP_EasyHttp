@@ -9,7 +9,7 @@
     
     <StackPanel VerticalAlignment="Center">
         
-        <hc:LoadingLine DotSpeed="1.5" DotCount="5" DotDiameter="5" Foreground="BlueViolet" Style="{StaticResource LoadingLineLarge}"/>
+        <!--<hc:LoadingLine DotSpeed="1.5" DotCount="5" DotDiameter="5" Foreground="BlueViolet"/>-->
         <Button HorizontalAlignment="Center" Background="Transparent" BorderBrush="#036BCA" Margin="10" Width="50" Height="25"
                 Content="{Binding Path=BtnContent, RelativeSource= {RelativeSource AncestorType={x:Type local:ProgressBtn }},Mode=TwoWay}"
                 Command="{Binding Path=BtnCommand, RelativeSource= {RelativeSource AncestorType={x:Type local:ProgressBtn }},Mode=TwoWay}"

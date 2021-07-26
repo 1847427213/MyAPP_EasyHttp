@@ -1,0 +1,33 @@
+﻿<Page x:Class="EasyHttp.View.ImagePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:EasyHttp.View"
+      xmlns:viewmodel="clr-namespace:EasyHttp.ViewModel"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ImagePage">
+    <Page.DataContext>
+        <viewmodel:ImagePageViewModel/>
+    </Page.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Background="Gray">
+            <Button Background="Transparent" BorderThickness="0" Command="{Binding GoBackCommand}"> 
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xe650;" FontFamily="/Font/#iconfont" FontSize="20" VerticalAlignment="Center" Margin="5" />
+                        <TextBlock  Text="返回" VerticalAlignment="Center" FontSize="16" Margin="0,5,5,5"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Frame x:Name="frame"/>
+        </Grid>
+    </Grid>
+</Page>

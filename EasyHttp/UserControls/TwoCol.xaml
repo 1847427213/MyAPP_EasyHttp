@@ -12,14 +12,7 @@
             <ColumnDefinition Width="6*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border  BorderThickness="1" BorderBrush="Gray" Margin="-1,0,-1,-1">
-            <TextBox VerticalContentAlignment="Center" Text="{Binding Path=KeyParm, RelativeSource= {RelativeSource AncestorType={x:Type local:TwoCol }},Mode=TwoWay}" BorderThickness="0" Padding="10,0" HorizontalContentAlignment="Center" x:Name="textbox1"/>
-        </Border>
-        <Border  BorderThickness="1" BorderBrush="Gray" Grid.Column="1" Margin="0,0,-1,-1">
-            <TextBox VerticalContentAlignment="Center" Text="{Binding Path=ValueParm, RelativeSource= {RelativeSource AncestorType={x:Type local:TwoCol }},Mode=TwoWay}" BorderThickness="0" Padding="5,0" HorizontalContentAlignment="Center"/>
-        </Border>
-        <Border  BorderThickness="1" BorderBrush="Gray" Grid.Column="2" Margin="0,0,-1,-1">
-           
-        </Border>
+        <TextBox Height="30" Grid.Column="0" VerticalContentAlignment="Center" Text="{Binding Path=KeyParm, RelativeSource= {RelativeSource AncestorType={x:Type local:TwoCol }},Mode=TwoWay}" BorderThickness="1,1,0,0" Padding="10,0" HorizontalContentAlignment="Center" x:Name="textbox1"/>
+        <TextBox Height="30" Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding Path=ValueParm, RelativeSource= {RelativeSource AncestorType={x:Type local:TwoCol }},Mode=TwoWay}" BorderThickness="1,1,1,0" Padding="5,0" HorizontalContentAlignment="Center"/>
     </Grid>
 </UserControl>

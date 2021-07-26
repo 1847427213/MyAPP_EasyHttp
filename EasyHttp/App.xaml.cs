@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using EasyHttp.View;
 
 namespace EasyHttp
@@ -15,9 +16,7 @@ namespace EasyHttp
     /// </summary>
     public partial class App : Application
     {
-        public static Frame Frame { get; set; }
-        public static Page HomePage { get; set; } = new HomePage();
-        public static Page GetPage { get; set; } = new GetPage();
-        public static Page PostPage { get; set; } = new PostPage();
+        public static Frame Frame { get; set; } = App.Current.MainWindow.FindName("frame") as Frame;
+        public static Frame ImgFrame { get; set; }
     }
 }

@@ -20,12 +20,12 @@ namespace EasyHttp.ViewModel
 
         private void GoGet(object obj)
         {
-            App.Frame.Navigate(App.GetPage);
+
         }
 
         private void GoPost(object obj)
         {
-            App.Frame.Navigate(App.PostPage);
+
         }
     }
 }

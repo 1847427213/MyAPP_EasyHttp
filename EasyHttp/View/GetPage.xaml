@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:UserControl="clr-namespace:EasyHttp.UserControls"
       xmlns:local="clr-namespace:EasyHttp.View"
-      xmlns:viewmodel="clr-namespace:EasyHttp.ViewModel" xmlns:hc="https://handyorg.github.io/handycontrol"
+      xmlns:viewmodel="clr-namespace:EasyHttp.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="GetPage" Background="#F0F0F0">
@@ -13,8 +13,131 @@
         <viewmodel:GetPageViewModel/>
     </Page.DataContext>
 
-    <Grid>
-        <Grid.RowDefinitions>
+    <Grid >
+        <TabControl Background="AliceBlue" Style="{DynamicResource GetTabControlStyle}" HorizontalContentAlignment="Center" BorderThickness="0">
+            <TabItem Style="{StaticResource GetTabItemStyle}" Header="Request">
+                <StackPanel Margin="5" >
+                        <StackPanel>
+                            <Grid Margin="5,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="URL" Foreground="Black" FontSize="16" Margin="2,2,5,2" VerticalAlignment="Center"/>
+                                <TextBox Grid.Column="1" FontSize="14" Height="33" VerticalAlignment="Center" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="{Binding Url}"/>
+                            </Grid>
+                            <StackPanel Margin="5,10">
+                                <TextBlock Text="Headers" Foreground="Black" FontSize="16" Margin="0,0,0,5"/>
+                                <Grid VerticalAlignment="Top" Background="#AAD6FF" ShowGridLines="True">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="6*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="Key" Background="Transparent" BorderThickness="0"/>
+                                    <Label Content="Value" Grid.Column="1" Background="Transparent" BorderThickness="0"/>
+                                <Label Content="Remove" HorizontalAlignment="Center" Grid.Column="2" Background="Transparent" BorderThickness="0"/>
+                                </Grid>
+                                <ItemsControl ItemsSource="{Binding Headers}" MaxHeight="250">
+                                    <ItemsControl.Template>
+                                        <ControlTemplate>
+                                            <ScrollViewer x:Name="ScrollViewer" Padding="{TemplateBinding Padding}">
+                                                <ItemsPresenter/>
+                                            </ScrollViewer>
+                                        </ControlTemplate>
+                                    </ItemsControl.Template>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid ShowGridLines="True">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="9*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                                <UserControl:TwoCol KeyParm="{Binding Key,Mode=TwoWay}" ValueParm="{Binding Value,Mode=TwoWay}"/>
+                                                <Button Grid.Column="1" FontSize="18" Foreground="Red" ToolTip="移除此项" Command="{Binding DataContext.RemoveHeaderCommand,RelativeSource={RelativeSource AncestorType={x:Type Page}}}" CommandParameter="{Binding}" Background="Transparent" FontFamily="/Font/#iconfont" Content="&#xe65a;" HorizontalAlignment="Stretch" BorderThickness="0"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <TextBlock Height="1" Background="AntiqueWhite" Grid.ColumnSpan="3" Grid.Row="1"/>
+                                <Button HorizontalAlignment="Stretch" Margin="0,3" FontFamily="/Font/#iconfont" FontSize="18"  FontWeight="Bold" Content="&#xe62e;" Background="#AAD6FF" BorderThickness="0" Padding="0" ToolTip="添加参数" Command="{Binding AddHeaderCommand}"/>
+                            </StackPanel>
+                            <Expander Header="Headers" IsExpanded="True" Background="#4E94FF" Foreground="White" Margin="0,0,0,3" BorderThickness="0">
+                                <StackPanel>
+                                    <Grid VerticalAlignment="Top" Background="#AAD6FF">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="6*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Content="Key" Background="Transparent" BorderThickness="0"/>
+                                        <Label Content="Value" Grid.Column="1" Background="Transparent" BorderThickness="0"/>
+                                        <Label Content="Remove" Grid.Column="2" Background="Transparent" BorderThickness="0"/>
+                                    </Grid>
+                                    <ItemsControl ItemsSource="{Binding Headers}" MaxHeight="150">
+                                        <ItemsControl.Template>
+                                            <ControlTemplate>
+                                                <ScrollViewer x:Name="ScrollViewer" Padding="{TemplateBinding Padding}">
+                                                    <ItemsPresenter/>
+                                                </ScrollViewer>
+                                            </ControlTemplate>
+                                        </ItemsControl.Template>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <UserControl:TwoCol KeyParm="{Binding Key,Mode=TwoWay}" ValueParm="{Binding Value,Mode=TwoWay}"/>
+                                                    <Button HorizontalAlignment="Right" FontSize="18" Foreground="Red" ToolTip="移除此项" Command="{Binding DataContext.RemoveHeaderCommand,RelativeSource={RelativeSource AncestorType={x:Type Page}}}" CommandParameter="{Binding}" Background="Transparent" FontFamily="/Font/#iconfont" Content="&#xe65a;" Width="77" BorderThickness="0"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <Button HorizontalAlignment="Stretch" Margin="0,3" FontFamily="/Font/#iconfont" FontSize="18"  FontWeight="Bold" Content="&#xe62e;" Background="#AAD6FF" BorderThickness="0" Padding="0" ToolTip="添加参数" Command="{Binding AddHeaderCommand}"/>
+                                </StackPanel>
+                            </Expander>
+                            <Expander Header="Parameter" Background="#4E94FF" Foreground="White" BorderThickness="0" Margin="0,0,0,3">
+                                <StackPanel>
+                                    <Grid VerticalAlignment="Top" Background="#AAD6FF">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="6*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Content="Key" Background="Transparent" BorderThickness="0"/>
+                                        <Label Content="Value" Grid.Column="1" Background="Transparent" BorderThickness="0"/>
+                                        <Label Content="Remove" Grid.Column="2" Background="Transparent" BorderThickness="0"/>
+                                    </Grid>
+                                    <ItemsControl ItemsSource="{Binding Parameters}" MaxHeight="150" BorderThickness="0">
+                                        <ItemsControl.Template>
+                                            <ControlTemplate>
+                                                <ScrollViewer x:Name="ScrollViewer" Padding="{TemplateBinding Padding}">
+                                                    <ItemsPresenter/>
+                                                </ScrollViewer>
+                                            </ControlTemplate>
+                                        </ItemsControl.Template>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <UserControl:TwoCol KeyParm="{Binding Key,Mode=TwoWay}" ValueParm="{Binding Value,Mode=TwoWay}"/>
+                                                    <Button HorizontalAlignment="Right" FontSize="18" Foreground="Red" ToolTip="移除此项" Command="{Binding DataContext.RemoveParmCommand,RelativeSource={RelativeSource AncestorType={x:Type Page}}}" CommandParameter="{Binding}" Background="Transparent" FontFamily="/Font/#iconfont" Content="&#xe65a;" Width="77" BorderThickness="0"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <Button HorizontalAlignment="Stretch" Margin="0,3" FontFamily="/Font/#iconfont" FontSize="18"  FontWeight="Bold" Content="&#xe62e;" Background="#AAD6FF" BorderThickness="0" Padding="0" ToolTip="添加参数" Command="{Binding AddParmCommand}"/>
+                                </StackPanel>
+                            </Expander>
+                        </StackPanel>
+                    <Button VerticalAlignment="Bottom" Grid.Row="1" HorizontalAlignment="Stretch" Content="Request" BorderThickness="0" Background="#036BCA" Command="{Binding RequestCommand}"/>
+                </StackPanel>
+            </TabItem>
+            <TabItem Style="{StaticResource GetTabItemStyle}" Header="Response">
+                <StackPanel Background="Gray"/>
+            </TabItem>
+            <TabItem Style="{StaticResource GetTabItemStyle}" Header="Content">
+                <StackPanel Background="Gray"/>
+            </TabItem>
+        </TabControl>
+        <!--<Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
@@ -96,12 +219,12 @@
             <Grid Background="Gray" Opacity="0.6"></Grid>
             <StackPanel VerticalAlignment="Center">
                 <TextBlock Foreground="#036BCA" Text="正在处理网络请求，请稍后..." FontSize="14" HorizontalAlignment="Center"/>
-                <hc:LoadingLine DotSpeed="1.5" DotCount="5" DotDiameter="5" Foreground="BlueViolet" Style="{StaticResource LoadingLineLarge}" Margin="30,10"/>
+                --><!--<hc:LoadingLine DotSpeed="1.5" DotCount="5" DotDiameter="5" Foreground="BlueViolet" Margin="30,10"/>--><!--
                 <Button HorizontalAlignment="Center" Background="#036BCA" Foreground="White" BorderBrush="#036BCA" Margin="10"
                 Content="Cancel" Command="{Binding CancelCommand}"
                 VerticalAlignment="Top"/>
             </StackPanel>
-        </Grid>
+        </Grid>-->
     </Grid>
 
 </Page>

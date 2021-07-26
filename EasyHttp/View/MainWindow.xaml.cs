@@ -22,12 +22,16 @@ namespace EasyHttp.View
     /// </summary>
     public partial class MainWindow : Window
     {
-        MainWindowViewModel ViewModel=>this.DataContext as MainWindowViewModel;
+        MainWindowViewModel ViewModel => this.DataContext as MainWindowViewModel;
         public MainWindow()
         {
             InitializeComponent();
-            App.Frame = this.frame;
-            App.Frame.Navigate(App.HomePage);
+            App.Frame.Navigate(MyApp.Instance.MyApp_Page.HomePage ?? new HomePage());
+        }
+
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            App.Frame.Navigate(MyApp.Instance.MyApp_Page.HomePage ?? new HomePage());
         }
     }
 }

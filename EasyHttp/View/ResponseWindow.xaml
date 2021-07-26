@@ -1,11 +1,10 @@
-﻿<hc:BlurWindow x:Class="EasyHttp.View.ResponseWindow"
+﻿<Window x:Class="EasyHttp.View.ResponseWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasyHttp.View"
         mc:Ignorable="d"
-        xmlns:hc="https://handyorg.github.io/handycontrol"
         Title="ResponseWindow" Height="350" Width="600" ResizeMode="NoResize">
     <Grid>
         <TabControl Margin="10" Style="{StaticResource TabControlInLine}">
@@ -16,7 +15,7 @@
                 <Grid>
                     <TextBox IsReadOnly="True" Visibility="{Binding ShowJson}" BorderBrush="Gray" Text="{Binding Content}" SnapsToDevicePixels="True" VerticalContentAlignment="Top" TextWrapping="Wrap"/>
                     <Grid Visibility="{Binding ShowFile}">
-                        <hc:ImageViewer ShowImgMap="True" IsFullScreen="True"  Background="{DynamicResource SecondaryRegionBrush}" ImageSource="{Binding ImageSource}"/>
+                        <!--<hc:ImageViewer ShowImgMap="True" IsFullScreen="True"  Background="{DynamicResource SecondaryRegionBrush}" ImageSource="{Binding ImageSource}"/>-->
                     </Grid>
                 </Grid>
             </TabItem>
@@ -25,4 +24,4 @@
             </TabItem>
         </TabControl>
     </Grid>
-</hc:BlurWindow>
+</Window>
