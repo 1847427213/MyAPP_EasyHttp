@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EasyHttp.Util;
 using EasyHttp.ViewModel;
 
 namespace EasyHttp.View
@@ -26,12 +27,15 @@ namespace EasyHttp.View
         public MainWindow()
         {
             InitializeComponent();
-            App.Frame.Navigate(MyApp.Instance.MyApp_Page.HomePage ?? new HomePage());
+            App.MainNavigation = new NavigationTool();
+            App.MainNavigation.Navigation(App.Frame, MyApp.Instance.MyApp_Page.HomePage ?? new HomePage());
+            //App.Frame.Navigate(MyApp.Instance.MyApp_Page.HomePage ?? new HomePage());
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            App.Frame.Navigate(MyApp.Instance.MyApp_Page.HomePage ?? new HomePage());
+            App.MainNavigation.Navigation(App.Frame, MyApp.Instance.MyApp_Page.HomePage ?? new HomePage());
+            //App.Frame.Navigate(MyApp.Instance.MyApp_Page.HomePage ?? new HomePage());
         }
     }
 }

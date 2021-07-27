@@ -7,9 +7,28 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="LookImagePage">
-
-    <Grid>
-        <Image Source="{Binding ImageSource}" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.6" Stretch="UniformToFill"/>
-        <Image Source="{Binding ImageSource}" Margin="10"/>
+    <Page.Resources>
+        <local:ScaleConvter x:Key="ScaleConvter"/>
+        <TransformGroup x:Key="ImageTransform">
+            <ScaleTransform />
+            <TranslateTransform/>
+            <RotateTransform/>
+        </TransformGroup>
+    </Page.Resources>
+    <Grid x:Name="RootGrid" >
+        <Image Source="{Binding ImageSource}" MouseWheel="MasterImage_MouseWheel" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.6" Stretch="UniformToFill"/>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" 
+              VerticalScrollBarVisibility="Disabled" x:Name="MasterScrollViewer">
+                <Image Margin="10" Source="{Binding ImageSource}" x:Name="img" MouseWheel="MasterImage_MouseWheel" MouseLeave="img_MouseLeave" MouseUp="img_MouseUp" MouseMove="img_MouseMove" RenderTransform="{StaticResource ImageTransform}"/>
+        </ScrollViewer>
+        <Border VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="AliceBlue" CornerRadius="5" OpacityMask="Red" Opacity="0.7">
+            <StackPanel Orientation="Horizontal" Margin="30,0">
+                <Button Margin="15,8" Style="{StaticResource ImgBtnStyle}" ToolTip="下载" Content="&#xe638;" Foreground="#27EA9B"/>
+                <Button Margin="15,8" Style="{StaticResource ImgBtnStyle}" ToolTip="向左旋转" Content="&#xe66b;" Foreground="#27EA9B" Click="Button_Click"/>
+                <Button Margin="15,8" Style="{StaticResource ImgBtnStyle}" ToolTip="向右旋转" Content="&#xe66a;" Foreground="#27EA9B"/>
+                <Button Margin="15,8" Style="{StaticResource ImgBtnStyle}" ToolTip="缩放比例" FontSize="20" Content="{Binding Scale,Converter={StaticResource ScaleConvter}}" Foreground="#27EA9B"/>
+                <Button Margin="15,8" Style="{StaticResource ImgBtnStyle}" ToolTip="设为背景" Content="&#xe631;" Foreground="#27EA9B"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Page>

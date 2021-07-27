@@ -23,7 +23,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid Background="Gray" Margin="2,2,0,0">
-                        <Image Width="120" Height="120" VerticalAlignment="Center" Margin="5" MouseEnter="Image_MouseEnter" Source="{Binding ImageSource}"/>
+                        <Image Width="150" Height="150" VerticalAlignment="Center" Margin="5" MouseEnter="Image_MouseEnter" Source="{Binding ImageSource}" Stretch="Fill"/>
                         <Border Background="#90A0A5" Margin="5" Opacity="0.7" Visibility="{Binding ShowMenu}"  MouseLeave="Image_MouseLeave">
                             <UniformGrid  Rows="2" Columns="2" Margin="3">
                                 <Button Style="{StaticResource ImgBtnStyle}" ToolTip="查看" Content="&#xe626;" Foreground="#27EA9B" Command="{Binding DataContext.LookImageCommand ,RelativeSource={RelativeSource AncestorType={x:Type Page}}}" CommandParameter="{Binding}"/>

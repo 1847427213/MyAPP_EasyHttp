@@ -34,16 +34,20 @@ namespace EasyHttp.ViewModel
             switch (((Menus)obj).Name)
             {
                 case "Home":
-                    App.Frame.Navigate(MyApp.Instance.MyApp_Page.HomePage ??= new GetPage());
+                    //App.Frame.Navigate(MyApp.Instance.MyApp_Page.HomePage ??= new GetPage());
+                    App.MainNavigation.Navigation(App.Frame, MyApp.Instance.MyApp_Page.HomePage ??= new HomePage());
                     break;
                 case "Get":
-                    App.Frame.Navigate(MyApp.Instance.MyApp_Page.GetPage ??= new GetPage());
+                    //App.Frame.Navigate(MyApp.Instance.MyApp_Page.GetPage ??= new GetPage());
+                    App.MainNavigation.Navigation(App.Frame, MyApp.Instance.MyApp_Page.GetPage ??= new GetPage());
                     break;
                 case "Post":
-                    App.Frame.Navigate(MyApp.Instance.MyApp_Page.PostPage ??= new PostPage());
+                    //App.Frame.Navigate(MyApp.Instance.MyApp_Page.PostPage ??= new PostPage());
+                    App.MainNavigation.Navigation(App.Frame, MyApp.Instance.MyApp_Page.PostPage ??= new PostPage());
                     break;
                 case "Images":
-                    App.Frame.Navigate(MyApp.Instance.MyApp_Page.ImagePage ??= new ImagePage());
+                    //App.Frame.Navigate(MyApp.Instance.MyApp_Page.ImagePage ??= new ImagePage());
+                    App.MainNavigation.Navigation(App.Frame, MyApp.Instance.MyApp_Page.ImagePage ??= new ImagePage());
                     break;
                 default:
                     break;
@@ -52,7 +56,8 @@ namespace EasyHttp.ViewModel
 
         private void GoHome(object obj)
         {
-            App.Frame.Navigate(MyApp.Instance.MyApp_Page.HomePage ??= new HomePage());
+            App.MainNavigation.Navigation(App.Frame, MyApp.Instance.MyApp_Page.HomePage ??= new HomePage());
+            //App.Frame.Navigate(MyApp.Instance.MyApp_Page.HomePage ??= new HomePage());
         }
     }
     [AddINotifyPropertyChangedInterface]

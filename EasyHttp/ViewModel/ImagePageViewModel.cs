@@ -19,11 +19,10 @@ namespace EasyHttp.ViewModel
         public ImagePageViewModel()
         {
             GoBackCommand = new Command(GoBack);
-            
         }
         private void GoBack(object obj)
         {
-            App.ImgFrame.NavigationService.GoBack();
+            App.ImgNavigation.GoBack(App.ImgFrame);
         }
     }
 }

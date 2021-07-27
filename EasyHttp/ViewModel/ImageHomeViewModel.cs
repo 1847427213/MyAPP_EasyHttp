@@ -10,6 +10,7 @@ using System.Windows;
 using EasyHttp.View.ImagePages;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using EasyHttp.Util;
 
 namespace EasyHttp.ViewModel
 {
@@ -32,7 +33,7 @@ namespace EasyHttp.ViewModel
         }
         private void LookImage(object obj)
         {
-            App.ImgFrame.Navigate(new LookImagePage(((Image)obj).Paths));
+            App.ImgNavigation.Navigation(App.ImgFrame, new LookImagePage(((Image)obj).Paths));
         }
         private void LookImage1(object obj)
         {
@@ -50,12 +51,9 @@ namespace EasyHttp.ViewModel
             DirectoryInfo directoryInfo = new DirectoryInfo(@"C:\Users\赵晟\Desktop\Images");
             foreach (var item in directoryInfo.GetFiles())
             {
-                BitmapImage bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.UriSource =new Uri( item.FullName);
-                bitmapImage.DecodePixelWidth = 120;
-                bitmapImage.EndInit();
-                Images.Add(new Image() { ImageSource = bitmapImage, Paths=item.FullName, Name = item.Name });
+                BitmapImage bitmapImage;
+                bitmapImage = ImageTool.GetBitmapImage(item.FullName, 150);
+                Images.Add(new Image() { ImageSource = bitmapImage, Paths = item.FullName, Name = item.Name });
                 await Task.Delay(10);
             }
         }

@@ -27,7 +27,8 @@ namespace EasyHttp.View
         {
             InitializeComponent();
             App.ImgFrame = frame;
-            App.ImgFrame.Content = ViewModel.ImgHomePage ??= new ImgHomePage();
+            App.ImgNavigation = new Util.NavigationTool();
+            App.ImgNavigation.Navigation(App.ImgFrame, ViewModel.ImgHomePage ??= new ImgHomePage());
         }
     }
 }
