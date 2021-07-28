@@ -103,13 +103,13 @@
                             <Setter Property="Padding" Value="4,-1,0,0"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="#79C1FC"/>
+                            <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="White"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="#79C1FC"/>
+                            <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="White"/>
                         </Trigger>
                         <Trigger Property="IsChecked" Value="true">
-                            <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="#79C1FC"/>
+                            <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="White"/>
                         </Trigger>
                         <Trigger Property="IsChecked" Value="{x:Null}">
                         </Trigger>

@@ -12,14 +12,30 @@ namespace EasyHttp.ViewModel
     [AddINotifyPropertyChangedInterface]
     public class ImagePageViewModel
     {
-        public Page ImgHomePage { get; set; }
+        public Page ImgLocalPage { get; set; }
+        public Page ImgNetWorkPage { get; set; }
 
         public Command GoBackCommand { get; set; }
-        
+        public Command GoNetWorkPageCommand { get; set; }
+        public Command GoLocalPageCommand { get; set; }
+
         public ImagePageViewModel()
         {
             GoBackCommand = new Command(GoBack);
+            GoNetWorkPageCommand = new Command(GoNetWorkPage);
+            GoLocalPageCommand = new Command(GoLocalPage);
         }
+
+        private void GoLocalPage(object obj)
+        {
+            App.ImgNavigation.Navigation(App.ImgFrame, ImgLocalPage);
+        }
+
+        private void GoNetWorkPage(object obj)
+        {
+            App.ImgNavigation.Navigation(App.ImgFrame, ImgNetWorkPage ??= new ImgNetWorkPage());
+        }
+
         private void GoBack(object obj)
         {
             App.ImgNavigation.GoBack(App.ImgFrame);

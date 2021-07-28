@@ -28,7 +28,12 @@ namespace EasyHttp.View
             InitializeComponent();
             App.ImgFrame = frame;
             App.ImgNavigation = new Util.NavigationTool();
-            App.ImgNavigation.Navigation(App.ImgFrame, ViewModel.ImgHomePage ??= new ImgHomePage());
+            App.ImgNavigation.Navigation(App.ImgFrame, ViewModel.ImgLocalPage ??= new ImgLocalPage());
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

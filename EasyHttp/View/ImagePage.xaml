@@ -17,7 +17,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid>
-            <Label Background="AliceBlue" Height="1" VerticalAlignment="Top"/>
+            <Label Background="AliceBlue" Height="1.5" VerticalAlignment="Top" Opacity="0.3"/>
             <Button Background="Transparent" BorderThickness="0" Command="{Binding GoBackCommand}" HorizontalAlignment="Left">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
@@ -27,9 +27,11 @@
                 </Button.Content>
             </Button>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <RadioButton Content="网络图片" Foreground="White" FontSize="14" Margin="5" GroupName="ImageTab" Style="{StaticResource  ImageTabRadioBtn}" IsChecked="True"/>
-                <RadioButton Content="本地图片" Foreground="White" FontSize="14" Margin="5" GroupName="ImageTab" Style="{StaticResource ImageTabRadioBtn}"/>
+                <RadioButton Content="网络图片" Foreground="#c6c6c6" FontSize="14" GroupName="ImageTab" Style="{StaticResource  ImageTabRadioBtn}" Command="{Binding GoNetWorkPageCommand}"/>
+                <TextBlock Width="2" Background="#c6c6c6" Margin="5,0"/>
+                <RadioButton Content="本地图片" Foreground="#c6c6c6" FontSize="14" GroupName="ImageTab" Style="{StaticResource ImageTabRadioBtn}" Command="{Binding GoLocalPageCommand}" IsChecked="True"/>
             </StackPanel>
+            <Label Background="AliceBlue" Height="1" VerticalAlignment="Bottom" Opacity="0.3"/>
         </Grid>
         <Grid Grid.Row="1">
             <Frame x:Name="frame"/>

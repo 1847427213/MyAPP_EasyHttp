@@ -18,11 +18,11 @@ using Image = EasyHttp.ViewModel.Image;
 namespace EasyHttp.View.ImagePages
 {
     /// <summary>
-    /// ImgHomePage.xaml 的交互逻辑
+    /// ImgLocalPage.xaml 的交互逻辑
     /// </summary>
-    public partial class ImgHomePage : Page
+    public partial class ImgLocalPage : Page
     {
-        public ImgHomePage()
+        public ImgLocalPage()
         {
             InitializeComponent();
         }
