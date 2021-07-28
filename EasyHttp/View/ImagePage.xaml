@@ -16,8 +16,9 @@
             <RowDefinition Height="40"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Background="Gray">
-            <Button Background="Transparent" BorderThickness="0" Command="{Binding GoBackCommand}"> 
+        <Grid>
+            <Label Background="AliceBlue" Height="1" VerticalAlignment="Top"/>
+            <Button Background="Transparent" BorderThickness="0" Command="{Binding GoBackCommand}" HorizontalAlignment="Left">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="&#xe650;" FontFamily="/Font/#iconfont" FontSize="20" VerticalAlignment="Center" Margin="5" />
@@ -25,7 +26,11 @@
                     </StackPanel>
                 </Button.Content>
             </Button>
-        </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <RadioButton Content="网络图片" Foreground="White" FontSize="14" Margin="5" GroupName="ImageTab" Style="{StaticResource  ImageTabRadioBtn}" IsChecked="True"/>
+                <RadioButton Content="本地图片" Foreground="White" FontSize="14" Margin="5" GroupName="ImageTab" Style="{StaticResource ImageTabRadioBtn}"/>
+            </StackPanel>
+        </Grid>
         <Grid Grid.Row="1">
             <Frame x:Name="frame"/>
         </Grid>

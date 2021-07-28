@@ -40,6 +40,8 @@ namespace EasyHttp.ViewModel
         }
         private void DownLoadImage(object obj)
         {
+            var item = (Image)obj;
+            ImageTool.SaveBitmapImage(item.Paths);
         }
         private void DeleteImage(object obj)
         {

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasyHttp.View"
+        xmlns:app="clr-namespace:EasyHttp"
         xmlns:viewmodel="clr-namespace:EasyHttp.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1300" WindowStartupLocation="CenterScreen">
@@ -19,7 +20,12 @@
             <RowDefinition Height="45"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid Background="#407189" ToolTip="回到首页" Cursor="Hand" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+       
+        <Image DataContext="{x:Static app:MyApp.Instance}" Source="{Binding MainBack}"  Grid.RowSpan="2" Grid.ColumnSpan="2" Opacity="0.6" Stretch="UniformToFill">
+            
+        </Image>
+        <Grid Background="#0F1F24" Grid.RowSpan="2" Grid.ColumnSpan="2" Opacity="0.7"/>
+        <Grid ToolTip="EasyHttp">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
@@ -27,10 +33,10 @@
             <TextBlock Text="&#xe63e;" VerticalAlignment="Center" Foreground="White" Margin="10,0,5,0" FontSize="20" FontFamily="/Font/#iconfont"/>
             <TextBlock VerticalAlignment="Center" Text="EasyHttp" Foreground="White" FontSize="17" Grid.Column="1"/>
         </Grid>
-        <StackPanel Orientation="Horizontal" Grid.Column="1" Background="#407189">
-            <Button Style="{DynamicResource BackBtnStyle}" Content="主页" Command="{Binding GoHomeCommand}"/>
+        <StackPanel Orientation="Horizontal" Grid.Column="1">
+            <!--<Button Style="{DynamicResource BackBtnStyle}" Content="主页" Command="{Binding GoHomeCommand}"/>-->
         </StackPanel>
-        <ItemsControl Grid.Row="1" Background="#407189" BorderThickness="1" BorderBrush="#5895B2" ItemsSource="{Binding LeftMenus}">
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding LeftMenus}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <RadioButton Content="{Binding Name}" IsChecked="{Binding IsSelect,Mode=TwoWay}" Command="{Binding DataContext.NavigatCommand,RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Foreground="White" FontSize="15" Style="{DynamicResource LeftMenuRadioBtn}" GroupName="LeftMenu"/>

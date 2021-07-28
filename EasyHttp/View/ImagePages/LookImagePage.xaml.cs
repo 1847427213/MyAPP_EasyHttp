@@ -1,4 +1,5 @@
-﻿using EasyHttp.ViewModel;
+﻿using EasyHttp.Util;
+using EasyHttp.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,84 +29,97 @@ namespace EasyHttp.View.ImagePages
         {
             InitializeComponent();
             DataContext = ViewModel = new LookImagePageViewModel();
-            ViewModel.ImageSource = new BitmapImage(new Uri(url));
-        }
-
-        private void img_MouseEnter(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void img_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                MoveImage(e.GetPosition(RootGrid));
-            }
+            ViewModel.ImageSource = ImageTool.GetBitmapImage(url);
         }
         Point MovePoint;
-        private void MasterImage_MouseWheel(object sender, MouseWheelEventArgs e)
+        private void RotateImage(int Angle)
         {
-            TransformGroup group = this.FindResource("ImageTransform") as TransformGroup;
-            Point point = e.GetPosition(img);
-            double scale = e.Delta * 0.001;
-            if (ViewModel.Scale + scale <= 1) ViewModel.Scale = 1;
-            else ViewModel.Scale += scale;
-            ZoomImage(group, point, scale);
+            rotate.CenterX = img.ActualWidth / 2;
+            rotate.CenterY = img.ActualHeight / 2;
+            rotate.Angle += Angle;
         }
-        private static void ZoomImage(TransformGroup group, Point point, double scale)
-        {
-            Point pointToContent = group.Inverse.Transform(point);
-            ScaleTransform transform = group.Children[0] as ScaleTransform;
-            if (transform.ScaleX + scale < 1)
-            {
-                return;
-            }
-            transform.CenterX = point.X;
-            transform.CenterY = point.Y;
-            Debug.WriteLine(transform.CenterX);
-            transform.ScaleX += scale;
-            transform.ScaleY += scale;
-            Debug.WriteLine(transform.CenterX);
-            //TranslateTransform transform1 = group.Children[1] as TranslateTransform;
-            //transform1.X = -1 * ((pointToContent.X * transform.ScaleX) - point.X);
-            //transform1.Y = -1 * ((pointToContent.Y * transform.ScaleY) - point.Y);
-        }
-        Point previousMousePoint = default;
-        private void MoveImage(Point position)
-        {
-            if (previousMousePoint == default)
-                previousMousePoint = position;
-            TransformGroup group = FindResource("ImageTransform") as TransformGroup;
-            TranslateTransform transform = group.Children[1] as TranslateTransform;
-            transform.X += position.X - this.previousMousePoint.X;
-            transform.Y += position.Y - this.previousMousePoint.Y;
-            if (transform.X != 0 && transform.Y != 0)
-                this.previousMousePoint = position;
-        }
-        private void RotateImage(int num)
-        {
-            TransformGroup group = FindResource("ImageTransform") as TransformGroup;
-            RotateTransform transform = group.Children[2] as RotateTransform;
-            transform.CenterX = img.ActualWidth / 2;
-            transform.CenterY = img.ActualHeight / 2;
-            transform.Angle +=num;
-        }
-
-        private void img_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            this.previousMousePoint = default;
-        }
-
-        private void img_MouseLeave(object sender, MouseEventArgs e)
-        {
-            this.previousMousePoint = default;
-            MovePoint = default;
-        }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             RotateImage(-90);
+        }
+        private void Button_Click1(object sender, RoutedEventArgs e)
+        {
+            RotateImage(90);
+        }
+        private void Page_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            var height = img.ActualHeight;
+            var width = img.ActualWidth;
+            var point = e.GetPosition(img);
+            var newOrigin = new Point(point.X / width, point.Y / height);
+            var delta = newOrigin - img.RenderTransformOrigin;
+            if (e.Delta < 0)
+            {
+                if (scale.ScaleY * 0.8 >= 0.5)
+                {
+                    scale.ScaleX = scale.ScaleY = scale.ScaleY * 0.8;
+                    translate.Y += height * delta.Y * 0.25 * scale.ScaleY;
+                    translate.X += width * delta.X * 0.25 * scale.ScaleX;
+                }
+            }
+            else
+            {
+                if (scale.ScaleY / 0.8 <= 15)
+                {
+                    scale.ScaleX = scale.ScaleY = scale.ScaleY / 0.8;
+                    translate.Y -= height * delta.Y * 0.2 * scale.ScaleY;
+                    translate.X -= width * delta.X * 0.2 * scale.ScaleX;
+                }
+            }
+            ViewModel.Scale = scale.ScaleX;
+        }
+        private void Page_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            mousedown = true;
+            MovePoint = e.GetPosition(this);
+        }
+        bool mousedown = false;
+        private void Page_MouseLeave(object sender, MouseEventArgs e)
+        {
+            mousedown = false;
+        }
+        private void Page_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (mousedown && e.LeftButton == MouseButtonState.Pressed)
+            {
+                var point = e.GetPosition(this);
+                var delta = MoveImg(point);
+                MovePoint = point;
+                translate.X += delta.X;
+                translate.Y += delta.Y;
+            }
+        }
+        public Point MoveImg(Point point)
+        {
+            var delta = new Point();
+            switch (rotate.Angle % 360)
+            {
+                case 0:
+                    delta = new Point(point.X - MovePoint.X, point.Y - MovePoint.Y);
+                    break;
+                case 90:
+                case -270:
+                    delta = new Point((point.Y - MovePoint.Y), (point.X - MovePoint.X) * -1);
+                    break;
+                case 180:
+                case -180:
+                    delta = new Point((point.X - MovePoint.X) * -1, (point.Y - MovePoint.Y) * -1);
+                    break;
+                case -90:
+                case 270:
+                    delta = new Point((point.Y - MovePoint.Y) * -1, point.X - MovePoint.X);
+                    break;
+            }
+            return delta;
+        }
+        private void Page_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            mousedown = false;
         }
     }
     public class ScaleConvter : IValueConverter

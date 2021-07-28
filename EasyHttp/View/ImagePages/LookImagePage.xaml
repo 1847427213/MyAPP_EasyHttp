@@ -6,28 +6,34 @@
       xmlns:local="clr-namespace:EasyHttp.View.ImagePages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="LookImagePage">
+      Title="LookImagePage"
+      MouseDown="Page_MouseDown"
+      MouseMove="Page_MouseMove"
+      MouseLeave="Page_MouseLeave"
+      MouseUp="Page_MouseUp"
+      >
     <Page.Resources>
         <local:ScaleConvter x:Key="ScaleConvter"/>
-        <TransformGroup x:Key="ImageTransform">
-            <ScaleTransform />
-            <TranslateTransform/>
-            <RotateTransform/>
-        </TransformGroup>
     </Page.Resources>
-    <Grid x:Name="RootGrid" >
-        <Image Source="{Binding ImageSource}" MouseWheel="MasterImage_MouseWheel" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.6" Stretch="UniformToFill"/>
-        <ScrollViewer HorizontalScrollBarVisibility="Disabled" 
-              VerticalScrollBarVisibility="Disabled" x:Name="MasterScrollViewer">
-                <Image Margin="10" Source="{Binding ImageSource}" x:Name="img" MouseWheel="MasterImage_MouseWheel" MouseLeave="img_MouseLeave" MouseUp="img_MouseUp" MouseMove="img_MouseMove" RenderTransform="{StaticResource ImageTransform}"/>
-        </ScrollViewer>
-        <Border VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="AliceBlue" CornerRadius="5" OpacityMask="Red" Opacity="0.7">
+    <Grid ClipToBounds="True">
+        <Image Source="{Binding ImageSource}" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.7" Stretch="UniformToFill"/>
+        <Image Margin="10" Source="{Binding ImageSource}" MouseWheel="Page_MouseWheel" x:Name="img">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform x:Name="scale"/>
+                    <TranslateTransform x:Name="translate"/>
+                    <RotateTransform x:Name="rotate"/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+
+        <Border VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="AliceBlue" CornerRadius="5" Opacity="0.7">
             <StackPanel Orientation="Horizontal" Margin="30,0">
-                <Button Margin="15,8" Style="{StaticResource ImgBtnStyle}" ToolTip="下载" Content="&#xe638;" Foreground="#27EA9B"/>
+                <Button Margin="15,8" Style="{StaticResource ImgBtnStyle}" ToolTip="下载" Content="&#xe638;" Foreground="#27EA9B" Command="{Binding DownLoadImageCommand}"/>
                 <Button Margin="15,8" Style="{StaticResource ImgBtnStyle}" ToolTip="向左旋转" Content="&#xe66b;" Foreground="#27EA9B" Click="Button_Click"/>
-                <Button Margin="15,8" Style="{StaticResource ImgBtnStyle}" ToolTip="向右旋转" Content="&#xe66a;" Foreground="#27EA9B"/>
+                <Button Margin="15,8" Style="{StaticResource ImgBtnStyle}" ToolTip="向右旋转" Content="&#xe66a;" Foreground="#27EA9B" Click="Button_Click1"/>
                 <Button Margin="15,8" Style="{StaticResource ImgBtnStyle}" ToolTip="缩放比例" FontSize="20" Content="{Binding Scale,Converter={StaticResource ScaleConvter}}" Foreground="#27EA9B"/>
-                <Button Margin="15,8" Style="{StaticResource ImgBtnStyle}" ToolTip="设为背景" Content="&#xe631;" Foreground="#27EA9B"/>
+                <Button Margin="15,8" Style="{StaticResource ImgBtnStyle}" ToolTip="设为背景" Content="&#xe631;" Foreground="#27EA9B" Command="{Binding SetBackImageCommand}"/>
             </StackPanel>
         </Border>
     </Grid>
