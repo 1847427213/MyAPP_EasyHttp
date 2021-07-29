@@ -45,7 +45,7 @@ namespace EasyHttp.ViewModel
             {
                 ImagePaths.Add(new Image() { Paths = item, IsLocal = false });
             }
-            LoadIamges(30);
+            LoadIamges(15);
         }
 
         private void LookImage(object obj)
