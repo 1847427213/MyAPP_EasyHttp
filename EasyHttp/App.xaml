@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="./UI/RadioBtnStyle.xaml"/>
                 <ResourceDictionary Source="./UI/BtnStyle.xaml"/>
                 <ResourceDictionary Source="./UI/TabControlStyle.xaml"/>
+                <ResourceDictionary Source="./UI/ScrollViewerStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

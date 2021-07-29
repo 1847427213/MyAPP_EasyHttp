@@ -22,13 +22,14 @@ namespace EasyHttp
         private static MyApp instance;
         public static MyApp Instance { get; set; } = instance ??= new MyApp();
         public MyApp_Page MyApp_Page { get; set; } = new MyApp_Page();
+        public MyApp_Path MyApp_Path { get; set; } = new MyApp_Path();
         public ImageSource MainBack { get; set; }
+
         private void IniBack()
         {
-            var BackPath = @$"{Environment.CurrentDirectory}\BackIamge.png";
-            if (File.Exists(BackPath))
+            if (File.Exists(MyApp_Path.BackImgPath))
             {
-                SetBack(BackPath);
+                SetBack(MyApp_Path.BackImgPath);
             }
         }
         public void SetBack(BitmapImage bitmapImage)
@@ -47,5 +48,23 @@ namespace EasyHttp
         public Page GetPage { get; set; }
         public Page PostPage { get; set; }
         public Page ImagePage { get; set; }
+    }
+    [AddINotifyPropertyChangedInterface]
+    public class MyApp_Path
+    {
+        public MyApp_Path()
+        {
+            CreateDirectory(ImgesPath);
+        }
+
+        public string BackImgPath { get; set; } = @$"{Environment.CurrentDirectory}\Iamge\BackIamge.png";
+        public string ImgesPath { get; set; } = @$"{Environment.CurrentDirectory}\Iamge\LockIamge";
+        private void CreateDirectory(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
     }
 }

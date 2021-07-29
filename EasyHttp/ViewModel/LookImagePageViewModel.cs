@@ -25,8 +25,7 @@ namespace EasyHttp.ViewModel
         }
         private void SetBackImage(object obj)
          {
-            var BackPath = @$"{Environment.CurrentDirectory}\BackIamge.png";
-            if (ImageTool.SaveBitmapImage((BitmapImage)ImageSource, BackPath))
+            if (ImageTool.SaveBitmapImage((BitmapImage)ImageSource, MyApp.Instance.MyApp_Path.BackImgPath))
             {
                 MyApp.Instance.SetBack((BitmapImage)ImageSource);
             }

@@ -9,13 +9,13 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ImgLocalPage">
     <Page.DataContext>
-        <viewmodel:ImageHomeViewModel/>
+        <viewmodel:ImgLocalPageViewModel/>
     </Page.DataContext>
     <Grid>
-        <ItemsControl Grid.Row="1" Background="#407189" BorderThickness="1" BorderBrush="#5895B2" ItemsSource="{Binding Images}">
+        <ItemsControl Grid.Row="1"  ScrollViewer.ScrollChanged="ItemsControl_ScrollChanged" Background="#407189" BorderThickness="1" BorderBrush="#5895B2" ItemsSource="{Binding Images}">
             <ItemsControl.Template>
                 <ControlTemplate>
-                    <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <ScrollViewer Style="{StaticResource for_scrollviewer}">
                         <ItemsPresenter />
                     </ScrollViewer>
                 </ControlTemplate>
@@ -43,5 +43,10 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
+        <Button VerticalAlignment="Bottom" Content="&#xe620;"  Style="{StaticResource  AddImgBtnStyle}" Foreground="#27EA9B" FontSize="60" HorizontalAlignment="Right" Margin="0,0,30,20" Command="{Binding AddImageCommand}">
+            <Button.Effect>
+                <DropShadowEffect Color="Black" Opacity="0.5" ShadowDepth="0" BlurRadius="10" />
+            </Button.Effect>
+        </Button>
     </Grid>
 </Page>

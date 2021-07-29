@@ -22,9 +22,11 @@ namespace EasyHttp.View.ImagePages
     /// </summary>
     public partial class ImgLocalPage : Page
     {
+        ImgLocalPageViewModel ViewModel => DataContext as ImgLocalPageViewModel;
         public ImgLocalPage()
         {
             InitializeComponent();
+
         }
 
         private void Image_MouseEnter(object sender, MouseEventArgs e)
@@ -43,6 +45,30 @@ namespace EasyHttp.View.ImagePages
             catch (Exception)
             {
 
+            }
+        }
+        private void ItemsControl_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (ViewModel.ImagePaths.Count > 0)
+            {
+                int ViewportHeight = (int)e.ViewportHeight;
+                int ViewportWidth = (int)e.ViewportWidth;
+                int count = (ViewportHeight / 162 + 1) * (ViewportWidth / 162);
+                if (ViewModel.Images.Count == 0)
+                {
+                    ViewModel.LoadIamges(count);
+                }
+                else
+                {
+                    if (e.VerticalOffset + ViewportHeight >= e.ExtentHeight && (e.ExtentHeight > ViewportHeight || ViewModel.ImagePaths.Count < ViewportWidth / 162))
+                    {
+                        ViewModel.LoadIamges(count);
+                    }
+                    else if (count > ViewModel.Images.Count && e.ViewportHeightChange > 0 || e.ViewportWidthChange > 0)
+                    {
+                        ViewModel.LoadIamges(count - ViewModel.Images.Count);
+                    }
+                }
             }
         }
     }

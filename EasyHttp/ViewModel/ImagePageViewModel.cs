@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace EasyHttp.ViewModel
@@ -14,6 +15,8 @@ namespace EasyHttp.ViewModel
     {
         public Page ImgLocalPage { get; set; }
         public Page ImgNetWorkPage { get; set; }
+        public Visibility ShowGoBack { get; set; } = Visibility.Collapsed;
+
 
         public Command GoBackCommand { get; set; }
         public Command GoNetWorkPageCommand { get; set; }
@@ -28,7 +31,7 @@ namespace EasyHttp.ViewModel
 
         private void GoLocalPage(object obj)
         {
-            App.ImgNavigation.Navigation(App.ImgFrame, ImgLocalPage);
+            App.ImgNavigation.Navigation(App.ImgFrame, ImgLocalPage ??= new ImgLocalPage());
         }
 
         private void GoNetWorkPage(object obj)

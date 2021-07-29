@@ -24,7 +24,7 @@ namespace EasyHttp.Util
         {
             if (NavigationStack.Count <= 1) return false;
             NavigationStack.Pop();
-            frame.Navigate(NavigationStack.Last());
+            frame.Navigate(NavigationStack.First());
             return true;
         }
     }

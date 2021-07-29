@@ -13,6 +13,12 @@ namespace EasyHttp.Util
 {
     public class ImageTool
     {
+        /// <summary>
+        /// 根据路径获取bitmapimage
+        /// </summary>
+        /// <param name="filename">文件名</param>
+        /// <param name="DecodePixel">缩放到像素</param>
+        /// <returns></returns>
         public static BitmapImage GetBitmapImage(string filename, int DecodePixel = 0)
         {
             FileStream fileStream = new FileStream(filename, FileMode.Open);
@@ -31,6 +37,11 @@ namespace EasyHttp.Util
             memoryStream.Dispose();
             return bitmapImage;
         }
+        /// <summary>
+        /// 选择位置保存
+        /// </summary>
+        /// <param name="filename">文件名</param>
+        /// <returns></returns>
         public static bool SaveBitmapImage(string filename)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog()
@@ -52,25 +63,11 @@ namespace EasyHttp.Util
             }
             return false;
         }
-        public static bool SaveBitmapImage(BitmapImage bitmapImage, string backname)
-        {
-            try
-            {
-                BitmapEncoder encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
-                if (File.Exists(backname))
-                    File.Delete(backname);
-                FileStream fileStream = new FileStream(backname, FileMode.CreateNew);
-                encoder.Save(fileStream);
-                fileStream.Dispose();
-                return true;
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
-        }
+        /// <summary>
+        /// 选择位置保存
+        /// </summary>
+        /// <param name="bitmapImage">图片对象</param>
+        /// <returns></returns>
         public static bool SaveBitmapImage(BitmapImage bitmapImage)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog()
@@ -91,6 +88,62 @@ namespace EasyHttp.Util
             }
             return false;
         }
+        /// <summary>
+        /// 指定位置保存
+        /// </summary>
+        /// <param name="bitmapImage">图片对象</param>
+        /// <param name="backname">保存位置</param>
+        /// <returns></returns>
+        public static bool SaveBitmapImage(BitmapImage bitmapImage, string backname)
+        {
+            try
+            {
+                BitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
+                if (File.Exists(backname))
+                    File.Delete(backname);
+                FileStream fileStream = new FileStream(backname, FileMode.CreateNew);
+                encoder.Save(fileStream);
+                fileStream.Dispose();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+        /// <summary>
+        /// 保存图片到本地文件夹
+        /// </summary>
+        /// <param name="filename">文件名</param>
+        /// <returns></returns>
+        public static string SaveImage(string filename)
+        {
+            try
+            {
+                var savename = $@"{MyApp.Instance.MyApp_Path.ImgesPath}\{DateTime.Now.Ticks}.png";
+                Stream stream = new FileStream(filename, FileMode.Open);
+                FileStream fileStream = new FileStream(savename, FileMode.CreateNew);
+                var bytes = new byte[stream.Length];
+                stream.CopyTo(fileStream);
+                fileStream.Flush();
+                stream.Dispose();
+                fileStream.Dispose();
+                return savename;
+            }
+            catch (Exception)
+            {
+
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// bitmap转bitmapimage
+        /// </summary>
+        /// <param name="bitmapImage">图片对象</param>
+        /// <returns></returns>
         public static Bitmap GetBitmapByBitmapImage(BitmapImage bitmapImage)
         {
             Bitmap bitmap;
@@ -100,6 +153,38 @@ namespace EasyHttp.Util
             enc.Save(outStream);
             bitmap = new Bitmap(outStream);
             return bitmap;
+        }
+        /// <summary>
+        /// 检查是否是图像
+        /// </summary>
+        /// <param name="path">路径</param>
+        /// <returns></returns>
+        public static bool CheckImage(string path)
+        {
+            switch (Path.GetExtension(path).ToLower())
+            {
+                case ".png": return true;
+                case ".jpg": return true;
+                default: return false;
+            }
+        }
+        /// <summary>
+        /// 打开图片-可多选
+        /// </summary>
+        /// <returns></returns>
+        public static string[] OpenIamge()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Title = "保存图片",
+                Filter = "image files (*.png)|*.png|(*.jpg)|*.jpg",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog().Value)
+            {
+                return openFileDialog.FileNames;
+            }
+            return null;
         }
     }
 }

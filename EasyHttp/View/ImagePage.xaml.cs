@@ -27,13 +27,19 @@ namespace EasyHttp.View
         {
             InitializeComponent();
             App.ImgFrame = frame;
+            App.ImgFrame.Navigated += ImgFrame_Navigated;
             App.ImgNavigation = new Util.NavigationTool();
-            App.ImgNavigation.Navigation(App.ImgFrame, ViewModel.ImgLocalPage ??= new ImgLocalPage());
+            App.ImgNavigation.Navigation(App.ImgFrame, ViewModel.ImgNetWorkPage ??= new ImgNetWorkPage());
         }
 
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        private void ImgFrame_Navigated(object sender, NavigationEventArgs e)
         {
-
+            var pagename= e.Content.GetType().Name;
+            if (pagename.Equals("LookImagePage"))
+            {
+                ViewModel.ShowGoBack = Visibility.Visible;
+            }
+            else ViewModel.ShowGoBack = Visibility.Collapsed;
         }
     }
 }
