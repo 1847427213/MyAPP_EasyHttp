@@ -49,11 +49,12 @@ namespace EasyHttp.View.ImagePages
         }
         private void ItemsControl_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
+            int ViewportHeight = (int)e.ViewportHeight;
+            int ViewportWidth = (int)e.ViewportWidth;
+            int count = (ViewportHeight / 162 + 1) * (ViewportWidth / 162);
+            ViewModel.PageSize = count;
             if (ViewModel.ImagePaths.Count > 0)
             {
-                int ViewportHeight = (int)e.ViewportHeight;
-                int ViewportWidth = (int)e.ViewportWidth;
-                int count = (ViewportHeight / 162 + 1) * (ViewportWidth / 162);
                 if (ViewModel.Images.Count == 0)
                 {
                     ViewModel.LoadIamges(count);

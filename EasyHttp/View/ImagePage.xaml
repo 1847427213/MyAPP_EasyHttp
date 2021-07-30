@@ -17,7 +17,6 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid>
-            <Label Background="AliceBlue" Height="1.5" VerticalAlignment="Top" Opacity="0.3"/>
             <Button Background="Transparent" BorderThickness="0" Command="{Binding GoBackCommand}" HorizontalAlignment="Left" Visibility="{Binding ShowGoBack}">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">

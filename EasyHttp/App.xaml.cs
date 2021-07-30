@@ -21,5 +21,6 @@ namespace EasyHttp
         public static NavigationTool MainNavigation;
         public static Frame ImgFrame { get; set; }
         public static NavigationTool ImgNavigation;
+
     }
 }

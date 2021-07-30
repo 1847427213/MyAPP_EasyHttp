@@ -21,20 +21,33 @@ namespace EasyHttp.Util
         /// <returns></returns>
         public static BitmapImage GetBitmapImage(string filename, int DecodePixel = 0)
         {
-            FileStream fileStream = new FileStream(filename, FileMode.Open);
-            byte[] bytes = new byte[fileStream.Length];
-            fileStream.Read(bytes, 0, bytes.Length);
-            fileStream.Dispose();
-            MemoryStream memoryStream = new MemoryStream(bytes);
+            using FileStream fileStream = new FileStream(filename, FileMode.Open);
             BitmapImage bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();
             bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-            bitmapImage.StreamSource = memoryStream;
+            bitmapImage.StreamSource = fileStream;
             if (DecodePixel != 0)
                 bitmapImage.DecodePixelWidth = DecodePixel;
             bitmapImage.EndInit();
             bitmapImage.Freeze();
-            memoryStream.Dispose();
+            return bitmapImage;
+        }
+        /// <summary>
+        /// 加载图片
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="DecodePixel"></param>
+        /// <returns></returns>
+        public static BitmapImage GetBitmapImage2(string filename, int DecodePixel = 0)
+        {
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.UriSource = new Uri(filename);
+            if (DecodePixel != 0)
+                bitmapImage.DecodePixelWidth = DecodePixel;
+            bitmapImage.EndInit();
+            //bitmapImage.Freeze();
             return bitmapImage;
         }
         /// <summary>
@@ -161,13 +174,9 @@ namespace EasyHttp.Util
         /// <returns></returns>
         public static bool CheckImage(string path)
         {
-            switch (Path.GetExtension(path).ToLower())
-            {
-                case ".png": return true;
-                case ".jpg": return true;
-                default: return false;
-            }
+            return allowExts.Any(x => x == Path.GetExtension(path).ToLower());
         }
+        public static string[] allowExts = new string[] { ".png", ".jpeg", ".jpg" };
         /// <summary>
         /// 打开图片-可多选
         /// </summary>

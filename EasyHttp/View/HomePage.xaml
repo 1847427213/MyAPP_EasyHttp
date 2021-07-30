@@ -12,11 +12,11 @@
         <viewmodel:HomePageViewModel/>
     </Page.DataContext>
     <Grid>
-        <Grid.ColumnDefinitions>
+        <!--<Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Button Height="350" Width="350" Content="Get" FontSize="28" Command="{Binding GoGetCommand}"/>
-        <Button Grid.Column="1" Height="350" Width="350" Content="Post" FontSize="28" Command="{Binding GoPostCommand}"/>
+        <Button Grid.Column="1" Height="350" Width="350" Content="Post" FontSize="28" Command="{Binding GoPostCommand}"/>-->
     </Grid>
 </Page>

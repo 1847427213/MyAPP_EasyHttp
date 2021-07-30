@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using EasyHttp.Model;
 using EasyHttp.Util;
 using PropertyChanged;
 
@@ -23,6 +24,7 @@ namespace EasyHttp
         public static MyApp Instance { get; set; } = instance ??= new MyApp();
         public MyApp_Page MyApp_Page { get; set; } = new MyApp_Page();
         public MyApp_Path MyApp_Path { get; set; } = new MyApp_Path();
+        public MyApp_User MyApp_User { get; set; } = new MyApp_User();
         public ImageSource MainBack { get; set; }
 
         private void IniBack()

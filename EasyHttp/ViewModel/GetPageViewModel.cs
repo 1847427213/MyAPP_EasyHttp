@@ -102,14 +102,7 @@ namespace EasyHttp.ViewModel
         /// <param name="obj"></param>
         private async void Request(object obj)
         {
-            ShowPro = Visibility.Visible;
-            _http = new Http(Url, Headers.Count > 0 ? Headers : null, Parameters.Count > 0 ? Parameters : null);
-            var result = await _http.GetAsync();
-            ResponseWindow responseWindow = new ResponseWindow(_http.Response);
-            responseWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            responseWindow.ShowDialog();
-            //MessageBox.Show(result);
-            ShowPro = Visibility.Collapsed;
+            
         }
     }
     [AddINotifyPropertyChangedInterface]

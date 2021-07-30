@@ -27,10 +27,10 @@ namespace EasyHttp.View
         public MainWindow()
         {
             InitializeComponent();
-            //MyApp.Instance.MainBack = new BitmapImage(new Uri(@"C:\Users\赵晟\Desktop\637631024207096250.png"));
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.ShowDialog();
             App.MainNavigation = new NavigationTool();
             App.MainNavigation.Navigation(App.Frame, MyApp.Instance.MyApp_Page.HomePage ?? new HomePage());
-            //App.Frame.Navigate(MyApp.Instance.MyApp_Page.HomePage ?? new HomePage());
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

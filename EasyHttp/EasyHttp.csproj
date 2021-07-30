@@ -7,10 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="defaultheadimg.png" />
     <None Remove="Font\iconfont.ttf" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="defaultheadimg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Font\iconfont.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

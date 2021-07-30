@@ -36,7 +36,7 @@ namespace EasyHttp.ViewModel
             ImagePaths = new List<Image>();
             Getiamges();
         }
-
+        public int PageSize { get; set; }
         private void AddImage(object obj)
         {
             var filenames = ImageTool.OpenIamge();
@@ -45,7 +45,7 @@ namespace EasyHttp.ViewModel
             {
                 ImagePaths.Add(new Image() { Paths = item, IsLocal = false });
             }
-            LoadIamges(15);
+            LoadIamges(PageSize);
         }
 
         private void LookImage(object obj)

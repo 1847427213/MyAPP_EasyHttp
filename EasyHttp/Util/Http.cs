@@ -14,58 +14,30 @@ namespace EasyHttp.Util
 {
     public class Http : IHttp
     {
-        public HttpClient HttpClient { get; private set; }
-        public CancellationTokenSource TokenSource { get; private set; }
-        public HttpResponseMessage Response { get; private set; }
-        public string Request { get; private set; }
-        public string Url { get; private set; }
-
-        public Http(string url) : this(url, null, null) { }
-        public Http(string url, IEnumerable<KeyValue> headers) : this(url, headers, null) { }
-        public Http(string url, IEnumerable<KeyValue> headers, IEnumerable<KeyValue> parameters)
+        public HttpClient HttpClient;
+        public Http()
         {
-            HttpClient = new HttpClient()
+            HttpClient = Create();
+        }
+        private CancellationTokenSource TokenSource { get; set; }
+        private static HttpClient Create()
+        {
+            HttpClient HttpClient = new HttpClient()
             {
                 Timeout = new TimeSpan(0, 3, 0)
             };
-            if (headers != null)
-            {
-                foreach (var item in headers)
-                {
-                    if (string.IsNullOrEmpty(item.Key) || string.IsNullOrEmpty(item.Value))
-                        continue;
-                    HttpClient.DefaultRequestHeaders.Add(item.Key, item.Value);
-                }
-            }
-            StringBuilder paramsStr = new StringBuilder("?");
-            if (parameters != null)
-            {
-                foreach (var item in parameters)
-                {
-                    if (string.IsNullOrEmpty(item.Key))
-                        continue;
-                    paramsStr.Append($"{item.Key}={item.Value}");
-                }
-            }
-            string str = paramsStr.Length > 1 ? paramsStr.ToString() : string.Empty;
-            Url = $"{url}{str}";
+            HttpClient.DefaultRequestHeaders.Add("ContentType", "application/json");
+            HttpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {MyApp.Instance.MyApp_User.Token}");
+            return HttpClient;
         }
-        public async Task<string> GetAsync()
+        public async Task<string> GetAsync(string url)
         {
-            if (string.IsNullOrEmpty(Url))
-            {
-                return "Url为空";
-            }
             TokenSource = new CancellationTokenSource();
             try
             {
-                Response = await HttpClient.GetAsync(Url, HttpCompletionOption.ResponseContentRead, TokenSource.Token);
-                if (Response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    Request = await Response.Content.ReadAsStringAsync();
-                }
-                else Request = Response.ToString();
-                return Request;
+                var response = await HttpClient.GetAsync(url, TokenSource.Token);
+                var request =await response.Content.ReadAsStringAsync();
+                return request;
             }
             catch (TaskCanceledException)
             {
@@ -76,20 +48,24 @@ namespace EasyHttp.Util
                 return e.Message;
             }
         }
-        public async Task<string> GetAsync(string url)
-        {
-            TokenSource = new CancellationTokenSource();
-            Response = await HttpClient.GetAsync(url, HttpCompletionOption.ResponseContentRead, TokenSource.Token);
-            Request = await Response.Content.ReadAsStringAsync();
-            return Request;
-        }
-
         public async Task<string> PostAsync(string url, HttpContent content)
         {
             TokenSource = new CancellationTokenSource();
-            Response = await HttpClient.PostAsync(url, content, TokenSource.Token);
-            Request = await Response.Content.ReadAsStringAsync();
-            return Request;
+            try
+            {
+                var response = await HttpClient.PostAsync(url, content, TokenSource.Token);
+                var request = await response.Content.ReadAsStringAsync();
+                return request;
+            }
+            catch (TaskCanceledException)
+            {
+
+                return "Task取消成功";
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
         }
         public bool Cancel()
         {
@@ -100,16 +76,10 @@ namespace EasyHttp.Util
         }
         private void Dispose()
         {
-            HttpClient?.Dispose();
-            TokenSource?.Dispose();
-            Response?.Dispose();
         }
 
         ~Http()
         {
-            HttpClient?.Dispose();
-            TokenSource?.Dispose();
-            Response?.Dispose();
         }
     }
 }
