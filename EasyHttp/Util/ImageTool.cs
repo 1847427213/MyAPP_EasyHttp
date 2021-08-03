@@ -186,7 +186,7 @@ namespace EasyHttp.Util
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
                 Title = "保存图片",
-                Filter = "image files (*.png)|*.png|(*.jpg)|*.jpg",
+                Filter = "image files (*.png;*.jpg)|*.png;*.jpg",
                 Multiselect = true
             };
             if (openFileDialog.ShowDialog().Value)
