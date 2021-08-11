@@ -12,19 +12,21 @@ namespace EasyHttp.Util
         public Stack<Page> NavigationStack { get; set; }
         public NavigationTool()
         {
-            NavigationStack = new Stack<Page>();
+            //NavigationStack = new Stack<Page>();
         }
         public bool Navigation(Frame frame, Page page)
         {
             frame.Navigate(page);
-            NavigationStack.Push(page);
+            //NavigationStack.Push(page);
             return true;
         }
         public bool GoBack(Frame frame)
         {
-            if (NavigationStack.Count <= 1) return false;
-            NavigationStack.Pop();
-            frame.Navigate(NavigationStack.First());
+            //if (NavigationStack.Count <= 1) return false;
+            //NavigationStack.Pop();
+            frame.NavigationService.GoBack();
+            GC.Collect();
+            //frame.Navigate(NavigationStack.First());
             return true;
         }
     }
