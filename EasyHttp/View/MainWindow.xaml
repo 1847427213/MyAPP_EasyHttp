@@ -21,7 +21,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Image DataContext="{x:Static app:MyApp.Instance}" Source="{Binding MainBack}"  Grid.RowSpan="2" Grid.ColumnSpan="2" Opacity="0.6" Stretch="UniformToFill">
+        <Image DataContext="{x:Static app:MyApp.Instance}" Source="{Binding MainBack}"  Grid.RowSpan="2" Grid.ColumnSpan="2" Opacity="0.1" Stretch="UniformToFill">
 
         </Image>
         <Grid Background="#0F1F24" Grid.RowSpan="2" Grid.ColumnSpan="2" Opacity="0.7"/>
@@ -45,7 +45,6 @@
             </Grid>
         </Grid>
         <StackPanel Orientation="Horizontal" Grid.Column="1">
-            <!--<Button Style="{DynamicResource BackBtnStyle}" Content="主页" Command="{Binding GoHomeCommand}"/>-->
         </StackPanel>
         <ItemsControl Grid.Row="1" ItemsSource="{Binding LeftMenus}">
             <ItemsControl.ItemTemplate>
@@ -56,7 +55,7 @@
         </ItemsControl>
         <Grid Grid.Column="1" Grid.Row="1">
             <Label Background="AliceBlue" Height="1.5" VerticalAlignment="Top" Opacity="0.3"/>
-        <Frame BorderThickness="0"  NavigationUIVisibility="Hidden" Name="frame"/>
+            <Frame BorderThickness="0"  NavigationUIVisibility="Hidden" DataContext="{x:Static app:MyApp.Instance}" Content="{Binding MyApp_Page.ShowPage}"/>
         </Grid>
     </Grid>
 </Window>

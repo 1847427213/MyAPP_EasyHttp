@@ -10,23 +10,20 @@ namespace EasyHttp.Util
     public class NavigationTool
     {
         public Stack<Page> NavigationStack { get; set; }
-        public NavigationTool()
+        public Frame frame { get; set; }
+        public NavigationTool(Frame frame)
         {
-            //NavigationStack = new Stack<Page>();
+            this.frame = frame;
         }
-        public bool Navigation(Frame frame, Page page)
+        public bool Navigation(Page page)
         {
             frame.Navigate(page);
-            //NavigationStack.Push(page);
             return true;
         }
-        public bool GoBack(Frame frame)
+        public bool GoBack()
         {
-            //if (NavigationStack.Count <= 1) return false;
-            //NavigationStack.Pop();
             frame.NavigationService.GoBack();
             GC.Collect();
-            //frame.Navigate(NavigationStack.First());
             return true;
         }
     }

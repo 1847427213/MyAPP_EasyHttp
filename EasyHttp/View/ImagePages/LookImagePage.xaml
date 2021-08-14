@@ -16,8 +16,8 @@
         <local:ScaleConvter x:Key="ScaleConvter"/>
     </Page.Resources>
     <Grid ClipToBounds="True">
-        <Image Source="{Binding ImageSource}" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.7" Stretch="UniformToFill"/>
-        <Image Margin="10" Source="{Binding ImageSource}" MouseWheel="Page_MouseWheel" x:Name="img">
+        <Image Source="{Binding ImageSource}" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.2"/>
+        <Image Margin="10" Source="{Binding ImageSource}" RenderOptions.BitmapScalingMode="HighQuality"  UseLayoutRounding="True" MouseWheel="Page_MouseWheel" x:Name="img">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform x:Name="scale"/>

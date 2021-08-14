@@ -23,20 +23,11 @@ namespace EasyHttp.View
     /// </summary>
     public partial class MainWindow : Window
     {
-        MainWindowViewModel ViewModel => this.DataContext as MainWindowViewModel;
         public MainWindow()
         {
             InitializeComponent();
             LoginWindow loginWindow = new LoginWindow();
             loginWindow.ShowDialog();
-            App.MainNavigation = new NavigationTool();
-            App.MainNavigation.Navigation(App.Frame, MyApp.Instance.MyApp_Page.HomePage ?? new HomePage());
-        }
-
-        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            //App.MainNavigation.Navigation(App.Frame, MyApp.Instance.MyApp_Page.HomePage ?? new HomePage());
-            //App.Frame.Navigate(MyApp.Instance.MyApp_Page.HomePage ?? new HomePage());
         }
     }
 }

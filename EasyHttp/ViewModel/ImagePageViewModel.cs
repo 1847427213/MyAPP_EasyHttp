@@ -31,17 +31,17 @@ namespace EasyHttp.ViewModel
 
         private void GoLocalPage(object obj)
         {
-            App.ImgNavigation.Navigation(App.ImgFrame, ImgLocalPage ??= new ImgLocalPage());
+            App.ImgNavigation.Navigation(ImgLocalPage ??= new ImgLocalPage());
         }
 
         private void GoNetWorkPage(object obj)
         {
-            App.ImgNavigation.Navigation(App.ImgFrame, ImgNetWorkPage ??= new ImgNetWorkPage());
+            App.ImgNavigation.Navigation(ImgNetWorkPage ??= new ImgNetWorkPage());
         }
 
         private void GoBack(object obj)
         {
-            App.ImgNavigation.GoBack(App.ImgFrame);
+            App.ImgNavigation.GoBack();
         }
     }
 }

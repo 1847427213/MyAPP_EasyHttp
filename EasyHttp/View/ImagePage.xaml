@@ -7,7 +7,8 @@
       xmlns:viewmodel="clr-namespace:EasyHttp.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="ImagePage">
+      Title="ImagePage"
+      Loaded="Page_Loaded">
     <Page.DataContext>
         <viewmodel:ImagePageViewModel/>
     </Page.DataContext>
@@ -26,14 +27,14 @@
                 </Button.Content>
             </Button>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <RadioButton Content="网络图片" Foreground="#c6c6c6" FontSize="14" GroupName="ImageTab" Style="{StaticResource  ImageTabRadioBtn}" Command="{Binding GoNetWorkPageCommand}" IsChecked="True"/>
+                <RadioButton Content="网络图片" Foreground="#c6c6c6" FontSize="14" GroupName="ImageTab" Style="{StaticResource  ImageTabRadioBtn}" x:Name="NetWork" Command="{Binding GoNetWorkPageCommand}" IsChecked="True"/>
                 <TextBlock Width="2" Background="#c6c6c6" Margin="5,0"/>
-                <RadioButton Content="本地图片" Foreground="#c6c6c6" FontSize="14" GroupName="ImageTab" Style="{StaticResource ImageTabRadioBtn}" Command="{Binding GoLocalPageCommand}" />
+                <RadioButton Content="本地图片" Foreground="#c6c6c6" FontSize="14" GroupName="ImageTab" Style="{StaticResource ImageTabRadioBtn}" x:Name="Local" Command="{Binding GoLocalPageCommand}" />
             </StackPanel>
             <Label Background="AliceBlue" Height="1" VerticalAlignment="Bottom" Opacity="0.3"/>
         </Grid>
         <Grid Grid.Row="1">
-            <Frame x:Name="frame" Content="{Binding }"/>
+            <Frame x:Name="frame" />
         </Grid>
     </Grid>
 </Page>

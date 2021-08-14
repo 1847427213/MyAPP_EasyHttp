@@ -17,10 +17,6 @@ namespace EasyHttp
     /// </summary>
     public partial class App : Application
     {
-        public static Frame Frame { get; set; } = App.Current.MainWindow.FindName("frame") as Frame;
-        public static NavigationTool MainNavigation;
-        public static Frame ImgFrame { get; set; }
         public static NavigationTool ImgNavigation;
-
     }
 }

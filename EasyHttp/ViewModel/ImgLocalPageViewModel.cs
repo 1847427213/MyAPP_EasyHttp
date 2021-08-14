@@ -34,23 +34,25 @@ namespace EasyHttp.ViewModel
             AddImageCommand = new Command(AddImage);
             Images = new ObservableCollection<Image>();
             ImagePaths = new List<Image>();
-            Getiamges();
+            GetIamges();
         }
         public int PageSize { get; set; }
-        private void AddImage(object obj)
+        private async void AddImage(object obj)
         {
             var filenames = ImageTool.OpenIamge();
             if (filenames == null) return;
             foreach (var item in filenames)
             {
-                ImagePaths.Add(new Image() { Paths = item, IsLocal = false });
+                var result = ImageTool.SaveImage(item);
+                if (string.IsNullOrEmpty(result.Item1)) continue;
+                ImagePaths.Add(new Image() { SourcePath = result.Item1, ThumbnailPath = result.Item2 });
             }
             LoadIamges(PageSize);
         }
 
         private void LookImage(object obj)
         {
-            App.ImgNavigation.Navigation(App.ImgFrame, new LookImagePage(((Image)obj).Paths));
+            App.ImgNavigation.Navigation(new LookImagePage(((Image)obj).SourcePath));
         }
         private void LookImage1(object obj)
         {
@@ -58,22 +60,24 @@ namespace EasyHttp.ViewModel
         private void DownLoadImage(object obj)
         {
             var item = (Image)obj;
-            ImageTool.SaveBitmapImage(item.Paths);
+            ImageTool.SaveBitmapImage(item.SourcePath);
         }
         private void DeleteImage(object obj)
         {
             var item = (Image)obj;
             Images.Remove(item);
-            File.Delete(item.Paths);
+            File.Delete(item.SourcePath);
+            File.Delete(item.ThumbnailPath);
         }
-        public void Getiamges()
+        public void GetIamges()
         {
-            DirectoryInfo directoryInfo = new DirectoryInfo(MyApp.Instance.MyApp_Path.ImgesPath);
+            DirectoryInfo directoryInfo = new DirectoryInfo(MyApp.Instance.MyApp_Path.LockIamge_SourceImage);
             foreach (var item in directoryInfo.GetFiles())
             {
-                if (ImageTool.CheckImage(item.FullName))
+                if (ImageTool.CheckImage(item.FullName) && ImageTool.ExistsImage(item.FullName))
                 {
-                    ImagePaths.Add(new Image() { Paths = item.FullName });
+
+                    ImagePaths.Add(new Image() { SourcePath = item.FullName, ThumbnailPath = MyApp.Instance.MyApp_Path.LockIamge_Thumbnail + item.Name });
                 }
             }
         }
@@ -84,7 +88,6 @@ namespace EasyHttp.ViewModel
         /// <param name="count"></param>
         public async void LoadIamges(int count)
         {
-
             if (count <= 0) return;
             Visibility = Visibility.Visible;
             if (count > ImagePaths.Count)
@@ -93,19 +96,8 @@ namespace EasyHttp.ViewModel
             ImagePaths.RemoveRange(0, count);
             foreach (var item in items)
             {
-                BitmapImage bitmapImage;
-                if (!item.IsLocal)
-                {
-                    var path = ImageTool.SaveImage(item.Paths);
-                    if (string.IsNullOrEmpty(path)) continue;
-                    bitmapImage = ImageTool.GetBitmapImage(path, 150);
-                    Images.Add(new Image() { ImageSource = bitmapImage, Paths = path, Name = Path.GetFileNameWithoutExtension(path) });
-                }
-                else
-                {
-                    bitmapImage = ImageTool.GetBitmapImage(item.Paths, 150);
-                    Images.Add(new Image() { ImageSource = bitmapImage, Paths = item.Paths, Name = Path.GetFileNameWithoutExtension(item.Paths) });
-                }
+                item.ImageSource = ImageTool.GetBitmapImage(item.ThumbnailPath, 150);
+                Images.Add(item);
                 await Task.Delay(50);
             }
             Visibility = Visibility.Collapsed;
@@ -115,9 +107,9 @@ namespace EasyHttp.ViewModel
     public class Image
     {
         public ImageSource ImageSource { get; set; }
-        public string Paths { get; set; }
+        public string SourcePath { get; set; }
+        public string ThumbnailPath { get; set; }
         public string Name { get; set; }
         public Visibility ShowMenu { get; set; } = Visibility.Hidden;
-        public bool IsLocal { get; set; } = true;
     }
 }

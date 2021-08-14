@@ -26,10 +26,9 @@ namespace EasyHttp.View
         public ImagePage()
         {
             InitializeComponent();
-            App.ImgFrame = frame;
-            App.ImgFrame.Navigated += ImgFrame_Navigated;
-            App.ImgNavigation = new Util.NavigationTool();
-            App.ImgNavigation.Navigation(App.ImgFrame, ViewModel.ImgNetWorkPage ??= new ImgNetWorkPage());
+            frame.Navigated += ImgFrame_Navigated;
+            App.ImgNavigation = new Util.NavigationTool(frame);
+            App.ImgNavigation.Navigation(ViewModel.ImgNetWorkPage ??= new ImgNetWorkPage());
         }
 
         private void ImgFrame_Navigated(object sender, NavigationEventArgs e)
@@ -40,6 +39,15 @@ namespace EasyHttp.View
                 ViewModel.ShowGoBack = Visibility.Visible;
             }
             else ViewModel.ShowGoBack = Visibility.Collapsed;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if ((bool)NetWork.IsChecked)
+            {
+                App.ImgNavigation.Navigation(ViewModel.ImgNetWorkPage ??= new ImgNetWorkPage());
+            }
+            else App.ImgNavigation.Navigation(ViewModel.ImgLocalPage ??= new ImgLocalPage());
         }
     }
 }

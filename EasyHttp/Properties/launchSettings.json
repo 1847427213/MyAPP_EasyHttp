@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "EasyHttp": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}

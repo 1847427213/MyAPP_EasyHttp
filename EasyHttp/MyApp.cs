@@ -46,9 +46,8 @@ namespace EasyHttp
     [AddINotifyPropertyChangedInterface]
     public class MyApp_Page
     {
+        public Page ShowPage { get; set; }
         public Page HomePage { get; set; }
-        public Page GetPage { get; set; }
-        public Page PostPage { get; set; }
         public Page ImagePage { get; set; }
     }
     [AddINotifyPropertyChangedInterface]
@@ -56,11 +55,16 @@ namespace EasyHttp
     {
         public MyApp_Path()
         {
-            CreateDirectory(ImgesPath);
+            CreateDirectory(ImgPath);
+            CreateDirectory(LockIamge);
+            CreateDirectory(LockIamge_SourceImage);
+            CreateDirectory(LockIamge_Thumbnail);
         }
-
+        public string ImgPath { get; set; } = @$"{Environment.CurrentDirectory}\Iamge\";
         public string BackImgPath { get; set; } = @$"{Environment.CurrentDirectory}\Iamge\BackIamge.png";
-        public string ImgesPath { get; set; } = @$"{Environment.CurrentDirectory}\Iamge\LockIamge";
+        public string LockIamge { get; set; } = @$"{Environment.CurrentDirectory}\Iamge\LockIamge\";
+        public string LockIamge_SourceImage { get; set; } = @$"{Environment.CurrentDirectory}\Iamge\LockIamge\SourceImage\";
+        public string LockIamge_Thumbnail { get; set; } = @$"{Environment.CurrentDirectory}\Iamge\LockIamge\Thumbnail\";
         private void CreateDirectory(string path)
         {
             if (!Directory.Exists(path))

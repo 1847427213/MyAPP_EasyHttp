@@ -23,8 +23,8 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid Background="Gray" Margin="2,2,0,0">
-                        <Image Width="150" Height="150" Margin="5" MouseEnter="Image_MouseEnter" Source="{Binding ImageSource}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.6"/>
-                        <Image Width="150" Height="150" Margin="5"  MouseEnter="Image_MouseEnter" Source="{Binding ImageSource}"/>
+                        <Image Width="150" Height="150" Margin="5" MouseEnter="Image_MouseEnter" Source="{Binding ImageSource}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.4"/>
+                        <Image Width="150" Height="150" Margin="5" RenderOptions.BitmapScalingMode="HighQuality"  UseLayoutRounding="True"  MouseEnter="Image_MouseEnter" Source="{Binding ImageSource}"/>
 
                         <Border Background="#90A0A5" Margin="5" Opacity="0.7" Visibility="{Binding ShowMenu}"  MouseLeave="Image_MouseLeave">
                             <UniformGrid  Rows="2" Columns="2" Margin="3">

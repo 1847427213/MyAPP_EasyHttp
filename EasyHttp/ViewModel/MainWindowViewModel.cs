@@ -13,18 +13,14 @@ namespace EasyHttp.ViewModel
     [AddINotifyPropertyChangedInterface]
     public class MainWindowViewModel
     {
-        public Command GoHomeCommand { get; set; }
         public Command NavigatCommand { get; set; }
         public ObservableCollection<Menus> LeftMenus { get; set; }
         public MainWindowViewModel()
         {
-            GoHomeCommand = new Command(GoHome);
             NavigatCommand = new Command(Navigat);
             LeftMenus = new ObservableCollection<Menus>()
             {
                 new Menus(){ Name="Home",IsSelect=true },
-                new Menus(){ Name="Get"},
-                new Menus(){ Name="Post"},
                 new Menus(){ Name="Images"}
             };
         }
@@ -34,30 +30,12 @@ namespace EasyHttp.ViewModel
             switch (((Menus)obj).Name)
             {
                 case "Home":
-                    //App.Frame.Navigate(MyApp.Instance.MyApp_Page.HomePage ??= new GetPage());
-                    App.MainNavigation.Navigation(App.Frame, MyApp.Instance.MyApp_Page.HomePage ??= new HomePage());
-                    break;
-                case "Get":
-                    //App.Frame.Navigate(MyApp.Instance.MyApp_Page.GetPage ??= new GetPage());
-                    App.MainNavigation.Navigation(App.Frame, MyApp.Instance.MyApp_Page.GetPage ??= new GetPage());
-                    break;
-                case "Post":
-                    //App.Frame.Navigate(MyApp.Instance.MyApp_Page.PostPage ??= new PostPage());
-                    App.MainNavigation.Navigation(App.Frame, MyApp.Instance.MyApp_Page.PostPage ??= new PostPage());
+                    MyApp.Instance.MyApp_Page.ShowPage = MyApp.Instance.MyApp_Page.HomePage ??= new HomePage();
                     break;
                 case "Images":
-                    //App.Frame.Navigate(MyApp.Instance.MyApp_Page.ImagePage ??= new ImagePage());
-                    App.MainNavigation.Navigation(App.Frame, MyApp.Instance.MyApp_Page.ImagePage ??= new ImagePage());
-                    break;
-                default:
+                    MyApp.Instance.MyApp_Page.ShowPage = MyApp.Instance.MyApp_Page.ImagePage ??= new ImagePage();
                     break;
             }
-        }
-
-        private void GoHome(object obj)
-        {
-            App.MainNavigation.Navigation(App.Frame, MyApp.Instance.MyApp_Page.HomePage ??= new HomePage());
-            //App.Frame.Navigate(MyApp.Instance.MyApp_Page.HomePage ??= new HomePage());
         }
     }
     [AddINotifyPropertyChangedInterface]

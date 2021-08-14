@@ -8,6 +8,8 @@ using System.IO;
 using Microsoft.Win32;
 using System.Windows.Media.Imaging;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Diagnostics;
 
 namespace EasyHttp.Util
 {
@@ -131,24 +133,19 @@ namespace EasyHttp.Util
         /// </summary>
         /// <param name="filename">文件名</param>
         /// <returns></returns>
-        public static string SaveImage(string filename)
+        public static (string,string) SaveImage(string filename)
         {
+            var savename = $@"{MyApp.Instance.MyApp_Path.LockIamge_SourceImage}{DateTimeTool.GetTimeStamp()}{Path.GetExtension(filename)}";
             try
             {
-                var savename = $@"{MyApp.Instance.MyApp_Path.ImgesPath}\{DateTime.Now.Ticks}.png";
-                Stream stream = new FileStream(filename, FileMode.Open);
-                FileStream fileStream = new FileStream(savename, FileMode.CreateNew);
-                var bytes = new byte[stream.Length];
-                stream.CopyTo(fileStream);
-                fileStream.Flush();
-                stream.Dispose();
-                fileStream.Dispose();
-                return savename;
+                //var savename = $@"{MyApp.Instance.MyApp_Path.LockIamge_SourceImage}{DateTimeTool.GetTimeStamp()}{Path.GetExtension(filename)}";
+                File.Copy(filename, savename);
+                var ThumbnailPath= GetThumbnailImage(savename);
+                return (savename, ThumbnailPath);
             }
             catch (Exception)
             {
-
-                return string.Empty;
+                return (string.Empty, string.Empty);
             }
         }
 
@@ -176,6 +173,15 @@ namespace EasyHttp.Util
         {
             return allowExts.Any(x => x == Path.GetExtension(path).ToLower());
         }
+        /// <summary>
+        /// 检查图像是否存在
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static bool ExistsImage(string SouceImage)
+        {
+            return File.Exists(SouceImage)|| File.Exists(MyApp.Instance.MyApp_Path.LockIamge_Thumbnail + Path.GetFileName(SouceImage));
+        }
         public static string[] allowExts = new string[] { ".png", ".jpeg", ".jpg" };
         /// <summary>
         /// 打开图片-可多选
@@ -194,6 +200,27 @@ namespace EasyHttp.Util
                 return openFileDialog.FileNames;
             }
             return null;
+        }
+        /// <summary>
+        /// 获取图片缩略图
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="thumbpath"></param>
+        /// <returns></returns>
+        public static string GetThumbnailImage(string path)
+        {
+            var ThumbnailPath = MyApp.Instance.MyApp_Path.LockIamge_Thumbnail + Path.GetFileName(path);
+            Image img = Image.FromFile(path);
+            Image.GetThumbnailImageAbort myCallback = new Image.GetThumbnailImageAbort(ThumbnailCallback);
+            var ThumbnailImage = img.GetThumbnailImage(img.Width / 10, img.Height / 10, myCallback, IntPtr.Zero);
+            ThumbnailImage.Save(ThumbnailPath, ImageFormat.Jpeg);
+            img.Dispose();
+            ThumbnailImage.Dispose();
+            return ThumbnailPath;
+        }
+        private static bool ThumbnailCallback()
+        {
+            return false;
         }
     }
 }

@@ -13,10 +13,6 @@ namespace EasyHttp.Model
     [AddINotifyPropertyChangedInterface]
     public class MyApp_User
     {
-        public MyApp_User()
-        {
-            //DefaultUserInfo();
-        }
         public string NickName { get; set; }
         public string Token { get; set; }
         public Identity Identity { get; set; } = Identity.None;
