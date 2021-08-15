@@ -34,14 +34,14 @@ namespace EasyHttp.ViewModel
             formDataContent.Add(new StringContent(UserName), "userAccount");
             formDataContent.Add(new StringContent(PassWord), "UserPassWord");
             Http http = new Http();
-            var request = await http.PostAsync(HttpUrl.User.LoginUrl, formDataContent);
+            var request = await http.PostAsync(HttpUrl.User.LoginUrl(), formDataContent);
             JObject jobject = JObject.Parse(request);
             var code = jobject.Value<string>("code");
             var message = jobject.Value<string>("message");
             if (code.Equals("200"))
             {
                 var body = jobject.Value<JObject>("body");
-                MyApp.Instance.MyApp_User.SetUserInfo(body.Value<string>("userNickname"), body.Value<string>("userHeadimg"), body.Value<int>("userIdentity"));
+                MyApp.Instance.MyApp_User.SetUserInfo(body);
             }
             else
             {

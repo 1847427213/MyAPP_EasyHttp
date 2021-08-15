@@ -30,6 +30,8 @@
                 <RadioButton Content="网络图片" Foreground="#c6c6c6" FontSize="14" GroupName="ImageTab" Style="{StaticResource  ImageTabRadioBtn}" x:Name="NetWork" Command="{Binding GoNetWorkPageCommand}" IsChecked="True"/>
                 <TextBlock Width="2" Background="#c6c6c6" Margin="5,0"/>
                 <RadioButton Content="本地图片" Foreground="#c6c6c6" FontSize="14" GroupName="ImageTab" Style="{StaticResource ImageTabRadioBtn}" x:Name="Local" Command="{Binding GoLocalPageCommand}" />
+                <TextBlock Width="2" Background="#c6c6c6" Margin="5,0"/>
+                <RadioButton Content="图片审核" Foreground="#c6c6c6" FontSize="14" GroupName="ImageTab" Style="{StaticResource ImageTabRadioBtn}" x:Name="Audit" Command="{Binding GoAuditPageCommand}" />
             </StackPanel>
             <Label Background="AliceBlue" Height="1" VerticalAlignment="Bottom" Opacity="0.3"/>
         </Grid>

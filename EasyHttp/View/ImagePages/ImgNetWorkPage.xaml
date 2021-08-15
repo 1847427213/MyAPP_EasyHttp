@@ -3,12 +3,54 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:EasyHttp.View.ImagePages"
+      xmlns:local="clr-namespace:EasyHttp.View.ImagePages" 
+      xmlns:converter="clr-namespace:EasyHttp.Converters" 
+      xmlns:app="clr-namespace:EasyHttp"
+      xmlns:viewmodel="clr-namespace:EasyHttp.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ImgNetWorkPage">
-
+    <Page.DataContext>
+        <viewmodel:ImgNetWorkViewModel/>
+    </Page.DataContext>
+    <Page.Resources>
+        <converter:MyAppConverter x:Key="MyAppConverter"/>
+    </Page.Resources>
     <Grid>
-        
+        <ItemsControl Grid.Row="1"  ScrollViewer.ScrollChanged="ItemsControl_ScrollChanged" Background="#407189" BorderThickness="1" BorderBrush="#5895B2" ItemsSource="{Binding Images}">
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <ScrollViewer Style="{StaticResource for_scrollviewer}">
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Background="Gray" Margin="2,2,0,0">
+                        <Image Width="150" Height="150" Margin="5" MouseEnter="Image_MouseEnter" Source="{Binding ImageSource}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.4"/>
+                        <Image Width="150" Height="150" Margin="5" RenderOptions.BitmapScalingMode="HighQuality"  UseLayoutRounding="True"  MouseEnter="Image_MouseEnter" Source="{Binding ImageSource}"/>
+                        <Border Background="#90A0A5" Margin="5" Opacity="0.7" Visibility="{Binding ShowMenu}"  MouseLeave="Image_MouseLeave">
+                            <UniformGrid  Rows="2" Columns="2" Margin="3">
+                                <Button Style="{StaticResource ImgBtnStyle}" ToolTip="查看" Content="&#xe626;" Foreground="#27EA9B" Command="{Binding DataContext.LookImageCommand ,RelativeSource={RelativeSource AncestorType={x:Type Page}}}" CommandParameter="{Binding}"/>
+                                <Button Style="{StaticResource ImgBtnStyle}" ToolTip="查看" Content="&#xe626;" Foreground="#27EA9B" Command="{Binding DataContext.LookImage1Command ,RelativeSource={RelativeSource AncestorType={x:Type Page}}}"/>
+                                <Button Style="{StaticResource ImgBtnStyle}" ToolTip="下载" Content="&#xe638;" Foreground="#27EA9B" Command="{Binding DataContext.DownLoadImageCommand ,RelativeSource={RelativeSource AncestorType={x:Type Page}}}" CommandParameter="{Binding}"/>
+                                <Button Style="{StaticResource ImgBtnStyle}" ToolTip="删除" Content="&#xe636;" Foreground="#D8082C" Command="{Binding DataContext.DeleteImageCommand ,RelativeSource={RelativeSource AncestorType={x:Type Page}}}" CommandParameter="{Binding}"/>
+                            </UniformGrid>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        <Button VerticalAlignment="Bottom" Content="&#xe620;"  Style="{StaticResource  AddImgBtnStyle}" Foreground="#27EA9B" FontSize="60" HorizontalAlignment="Right" Margin="0,0,30,20" Command="{Binding DataContext.UploadImageCommand,RelativeSource={RelativeSource AncestorType=Page}}" DataContext="{x:Static app:MyApp.Instance}" Visibility="{Binding MyApp_User.Token,Converter={StaticResource MyAppConverter}}">
+            <Button.Effect>
+                <DropShadowEffect Color="Black" Opacity="0.5" ShadowDepth="0" BlurRadius="10" />
+            </Button.Effect>
+        </Button>
     </Grid>
 </Page>

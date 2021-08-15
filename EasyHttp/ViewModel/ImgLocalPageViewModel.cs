@@ -46,6 +46,7 @@ namespace EasyHttp.ViewModel
                 var result = ImageTool.SaveImage(item);
                 if (string.IsNullOrEmpty(result.Item1)) continue;
                 ImagePaths.Add(new Image() { SourcePath = result.Item1, ThumbnailPath = result.Item2 });
+                await Task.Delay(10);
             }
             LoadIamges(PageSize);
         }

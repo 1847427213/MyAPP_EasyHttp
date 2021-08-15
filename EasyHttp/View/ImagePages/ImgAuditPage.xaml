@@ -1,0 +1,43 @@
+﻿<Page x:Class="EasyHttp.View.ImagePages.ImgAuditPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:EasyHttp.View.ImagePages"
+      xmlns:viewmodel="clr-namespace:EasyHttp.ViewModel"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ImgAuditPage">
+    <Page.DataContext>
+        <viewmodel:ImgAuditViewMode/>
+    </Page.DataContext>
+    <Grid>
+        <ItemsControl ItemsSource="{Binding ImgAuditModels}">
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <ScrollViewer Style="{StaticResource for_scrollviewer}">
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <UniformGrid Columns="5">
+                        <Image Width="150" Height="150" UseLayoutRounding="True">
+                            <Image.Source>
+                                <BitmapImage DecodePixelWidth="150" UriSource="{Binding ImageSource}"/>
+                            </Image.Source>
+                        </Image>
+                        <TextBlock Foreground="White" FontSize="16"  ToolTip="作者" Text="{Binding UserNickname}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock Foreground="White" FontSize="16" ToolTip="上传时间" Text="{Binding Audittime}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBox ToolTip="图片备注" MaxHeight="160" MinHeight="50" Width="160" Text="{Binding Auditnote}" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button VerticalAlignment="Center" Content="通过"/>
+                            <Button VerticalAlignment="Center" Content="驳回"/>
+                        </StackPanel>
+                    </UniformGrid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</Page>

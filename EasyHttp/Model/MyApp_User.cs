@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using PropertyChanged;
+using Newtonsoft.Json.Linq;
 
 namespace EasyHttp.Model
 {
@@ -17,17 +18,19 @@ namespace EasyHttp.Model
         public string Token { get; set; }
         public Identity Identity { get; set; } = Identity.None;
         public ImageSource HeadImg { get; set; }
-        public void SetUserInfo(string nickname, string headimg, int identity)
+        public void SetUserInfo(JObject body)
         {
-            this.NickName = nickname;
-            this.HeadImg = ImageTool.GetBitmapImage2($"{HttpUrl.RootUrl}{headimg}?{DateTime.Now.Ticks}");
-            this.Identity = (Identity)identity;
+            this.NickName = body.Value<string>("userNickname");
+            this.HeadImg = ImageTool.GetBitmapImage2($"{HttpUrl.RootUrl}{body.Value<string>("userHeadimg")}?{DateTime.Now.Ticks}");
+            this.Identity = (Identity)body.Value<int>("userIdentity");
+            this.Token = body.Value<string>("token");
         }
         public void DefaultUserInfo()
         {
             this.NickName = "游客";
             this.HeadImg = ImageTool.GetBitmapImage2($@"{Environment.CurrentDirectory}\defaultheadimg.png");
             this.Identity = Identity.Visitors;
+            this.Token = string.Empty;
         }
     }
     public enum Identity

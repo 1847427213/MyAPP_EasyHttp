@@ -16,28 +16,13 @@ using System.Windows.Shapes;
 namespace EasyHttp.View.ImagePages
 {
     /// <summary>
-    /// ImgNetWorkPage.xaml 的交互逻辑
+    /// ImgAuditPage.xaml 的交互逻辑
     /// </summary>
-    public partial class ImgNetWorkPage : Page
+    public partial class ImgAuditPage : Page
     {
-        public ImgNetWorkPage()
+        public ImgAuditPage()
         {
             InitializeComponent();
-        }
-
-        private void ItemsControl_ScrollChanged(object sender, ScrollChangedEventArgs e)
-        {
-
-        }
-
-        private void Image_MouseEnter(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void Image_MouseLeave(object sender, MouseEventArgs e)
-        {
-
         }
     }
 }

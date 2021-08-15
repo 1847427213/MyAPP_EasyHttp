@@ -15,18 +15,26 @@ namespace EasyHttp.ViewModel
     {
         public Page ImgLocalPage { get; set; }
         public Page ImgNetWorkPage { get; set; }
+        public Page ImgAuditPage { get; set; }
         public Visibility ShowGoBack { get; set; } = Visibility.Collapsed;
 
 
         public Command GoBackCommand { get; set; }
         public Command GoNetWorkPageCommand { get; set; }
         public Command GoLocalPageCommand { get; set; }
+        public Command GoAuditPageCommand { get; set; }
 
         public ImagePageViewModel()
         {
             GoBackCommand = new Command(GoBack);
             GoNetWorkPageCommand = new Command(GoNetWorkPage);
             GoLocalPageCommand = new Command(GoLocalPage);
+            GoAuditPageCommand = new Command(GoAuditPage);
+        }
+
+        private void GoAuditPage(object obj)
+        {
+            App.ImgNavigation.Navigation(ImgAuditPage ??= new ImgAuditPage());
         }
 
         private void GoLocalPage(object obj)

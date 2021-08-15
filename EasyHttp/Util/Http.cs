@@ -36,16 +36,20 @@ namespace EasyHttp.Util
             try
             {
                 var response = await HttpClient.GetAsync(url, TokenSource.Token);
-                var request =await response.Content.ReadAsStringAsync();
-                return request;
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var request = await response.Content.ReadAsStringAsync();
+                    return request;
+                }
+                else return string.Empty;
             }
             catch (TaskCanceledException)
             {
-                return "Task取消成功";
+                return string.Empty;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return e.Message;
+                return string.Empty;
             }
         }
         public async Task<string> PostAsync(string url, HttpContent content)

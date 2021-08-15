@@ -19,13 +19,13 @@
             <WrapPanel x:Name="WrapPanel" HorizontalAlignment="Center" Margin="5,10,5,10">
                 <TextBlock Text="&#xe614;" FontFamily="/Font/#iconfont" FontSize="16" VerticalAlignment="Center" Margin="0,3,10,3" Foreground="White"/>
                 <Border CornerRadius="5" BorderBrush="White" BorderThickness="1">
-                    <TextBox Text="{Binding UserName}" InputMethod.IsInputMethodEnabled="False" CaretBrush="White" MaxLength="12" Width="150" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="1" VerticalAlignment="Center" Foreground="White"/>
+                    <TextBox Text="{Binding UserName,UpdateSourceTrigger=PropertyChanged}" InputMethod.IsInputMethodEnabled="False" CaretBrush="White" MaxLength="12" Width="150" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="1" VerticalAlignment="Center" Foreground="White"/>
                 </Border>
             </WrapPanel>
             <WrapPanel HorizontalAlignment="Center" Margin="5,10">
                 <TextBlock Text="&#xe619;" FontFamily="/Font/#iconfont" FontSize="16" VerticalAlignment="Center" Margin="0,3,10,3" Foreground="White"/>
                 <Border CornerRadius="5" BorderBrush="White" BorderThickness="1">
-                    <TextBox Text="{Binding PassWord}" InputMethod.IsInputMethodEnabled="False" CaretBrush="White" MaxLength="12" Width="150" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="1" VerticalAlignment="Center" Foreground="White"/>
+                    <TextBox Text="{Binding PassWord,UpdateSourceTrigger=PropertyChanged}" InputMethod.IsInputMethodEnabled="False" CaretBrush="White" MaxLength="12" Width="150" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Padding="1" VerticalAlignment="Center" Foreground="White"/>
                 </Border>
             </WrapPanel>
             <StackPanel HorizontalAlignment="Center">

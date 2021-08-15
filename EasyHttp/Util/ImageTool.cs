@@ -52,6 +52,19 @@ namespace EasyHttp.Util
             //bitmapImage.Freeze();
             return bitmapImage;
         }
+        public static BitmapImage GetBitmapImage(Stream stream, int DecodePixel = 0)
+        {
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            stream.Position = 0;
+            bitmapImage.StreamSource = stream;
+            if (DecodePixel != 0)
+                bitmapImage.DecodePixelWidth = DecodePixel;
+            bitmapImage.EndInit();
+            stream.Dispose();
+            return bitmapImage;
+        }
         /// <summary>
         /// 选择位置保存
         /// </summary>
@@ -191,7 +204,7 @@ namespace EasyHttp.Util
         {
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
-                Title = "保存图片",
+                Title = "选择图片",
                 Filter = "image files (*.png;*.jpg)|*.png;*.jpg",
                 Multiselect = true
             };
@@ -200,6 +213,24 @@ namespace EasyHttp.Util
                 return openFileDialog.FileNames;
             }
             return null;
+        }
+        /// <summary>
+        /// 打开图片
+        /// </summary>
+        /// <returns></returns>
+        public static string OpenOneIamge()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Title = "选择图片",
+                Filter = "image files (*.png;*.jpg)|*.png;*.jpg",
+                Multiselect = false
+            };
+            if (openFileDialog.ShowDialog().Value)
+            {
+                return openFileDialog.FileName;
+            }
+            return string.Empty;
         }
         /// <summary>
         /// 获取图片缩略图

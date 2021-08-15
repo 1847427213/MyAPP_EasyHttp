@@ -1,0 +1,42 @@
+﻿<Window x:Class="EasyHttp.View.UploadImageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EasyHttp.View"
+        xmlns:converter="clr-namespace:EasyHttp.Converters"
+        mc:Ignorable="d"
+        Title="UploadImageWindow" Height="500" Width="750" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <Window.Resources>
+        <converter:MyAppConverter1 x:Key="MyAppConverter1"/>
+    </Window.Resources>
+    <Grid>
+        <ItemsControl ItemsSource="{Binding UploadImageModels}">
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <ScrollViewer Style="{StaticResource for_scrollviewer}">
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="5,3">
+                        <Grid Background="Gray"/>
+                        <Image Width="150" Margin="10" Height="150" Source="{Binding ImageSource}"/>
+                        <Button IsEnabled="{Binding DataContext.IsEnabled ,RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Style="{StaticResource TransBtnStyle}" Background="Transparent" VerticalAlignment="Top" HorizontalAlignment="Right" ToolTip="删除" Content="&#xe65a;" Foreground="#D8082C" Command="{Binding DataContext.DeleteImageCommand ,RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsEnabled="{Binding IsEnabled}">
+            <Button Content="&#xe620;"  Style="{StaticResource AddImgBtnStyle}" Width="80" Height="80" Foreground="#27EA9B" FontSize="60" Command="{Binding AddImageCommand}"/>
+            <Button Content="&#xe637;" Style="{StaticResource AddImgBtnStyle}" Foreground="#27EA9B" Width="80" Height="80" FontSize="60" Command="{Binding UploadImageCommand}"/>
+        </StackPanel>
+    </Grid>
+</Window>
