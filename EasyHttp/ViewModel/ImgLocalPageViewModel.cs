@@ -53,6 +53,7 @@ namespace EasyHttp.ViewModel
 
         private void LookImage(object obj)
         {
+
             App.ImgNavigation.Navigation(new LookImagePage(((Image)obj).SourcePath));
         }
         private void LookImage1(object obj)

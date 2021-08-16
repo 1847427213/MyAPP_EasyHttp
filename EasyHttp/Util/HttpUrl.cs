@@ -16,8 +16,8 @@ namespace EasyHttp.Util
         public static class Image
         {
             public static string UploadToAudit() => $"{RootUrl}/api/Image/UploadToAudit";
-            public static string GetAuditList(int pagesize, int countsize) => $"{RootUrl}​/api/Image/GetAuditList?pagesize={pagesize}&countsize={countsize}";
-            public static string AuditImage() => $"{RootUrl}/api/Image​/AuditImage";
+            public static string GetAuditList(int loadsize, int count) => $"{RootUrl}​/api/Image/GetAuditList?loadsize={loadsize}&count={count}";
+            public static string AuditImage() => $"{RootUrl}/api/Image/AuditImage";
         }
 
     }

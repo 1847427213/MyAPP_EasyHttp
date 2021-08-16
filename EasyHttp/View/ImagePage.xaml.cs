@@ -47,7 +47,8 @@ namespace EasyHttp.View
             {
                 App.ImgNavigation.Navigation(ViewModel.ImgNetWorkPage ??= new ImgNetWorkPage());
             }
-            else App.ImgNavigation.Navigation(ViewModel.ImgLocalPage ??= new ImgLocalPage());
+            else if ((bool)Local.IsChecked) App.ImgNavigation.Navigation(ViewModel.ImgLocalPage ??= new ImgLocalPage());
+            else App.ImgNavigation.Navigation(ViewModel.ImgAuditPage ??= new ImgAuditPage());
         }
     }
 }

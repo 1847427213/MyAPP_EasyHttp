@@ -1,5 +1,7 @@
-﻿using System;
+﻿using EasyHttp.ViewModel;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +22,49 @@ namespace EasyHttp.View.ImagePages
     /// </summary>
     public partial class ImgAuditPage : Page
     {
+        ImgAuditViewMode ViewModel => DataContext as ImgAuditViewMode;
         public ImgAuditPage()
         {
             InitializeComponent();
+        }
+
+        private void ItemsControl_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            int ViewportHeight = (int)e.ViewportHeight;
+            int count = ViewportHeight / 151 + 1;
+            ViewModel.CountSize = count;
+            if (ViewportHeight >= 151)
+            {
+                Debug.WriteLine(e.VerticalOffset);
+                Debug.WriteLine(e.ExtentHeight);
+                Debug.WriteLine(e.ViewportHeight);
+                if (ViewportHeight + e.VerticalOffset >= e.ExtentHeight && e.ExtentHeight != 0)
+                    ViewModel.GetImgAuditList();
+            }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            ViewModel.GetImgAuditList();
+        }
+
+        private void Image_MouseEnter(object sender, MouseEventArgs e)
+        {
+            var item = (ImgAuditModel)((System.Windows.Controls.Image)e.Source).DataContext;
+            item.ShowLook = Visibility.Visible;
+        }
+
+        private void Grid_MouseLeave(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void Button_MouseLeave(object sender, MouseEventArgs e)
+        {
+            var item = (ImgAuditModel)((System.Windows.Controls.Button)e.Source).DataContext;
+            item.UserNickname = "123";
+            item.ShowLook = Visibility.Collapsed;
         }
     }
 }

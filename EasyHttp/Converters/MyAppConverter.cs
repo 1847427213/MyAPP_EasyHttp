@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EasyHttp.Model;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -28,6 +29,19 @@ namespace EasyHttp.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if ((value as ObservableCollection<object>)?.Count <= 0|| (value as ObservableCollection<object>)?.Count==null) return Visibility.Collapsed;
+            return Visibility.Visible;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class MyAppConverter3 : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ((int)(Identity)value>1) return Visibility.Collapsed;
             return Visibility.Visible;
         }
 

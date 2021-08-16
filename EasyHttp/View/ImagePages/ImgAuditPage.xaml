@@ -7,12 +7,13 @@
       xmlns:viewmodel="clr-namespace:EasyHttp.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="ImgAuditPage">
+      Title="ImgAuditPage"
+      Loaded="Page_Loaded">
     <Page.DataContext>
         <viewmodel:ImgAuditViewMode/>
     </Page.DataContext>
     <Grid>
-        <ItemsControl ItemsSource="{Binding ImgAuditModels}">
+        <ItemsControl ItemsSource="{Binding ImgAuditModels}" ScrollViewer.ScrollChanged="ItemsControl_ScrollChanged">
             <ItemsControl.Template>
                 <ControlTemplate>
                     <ScrollViewer Style="{StaticResource for_scrollviewer}">
@@ -22,22 +23,28 @@
             </ItemsControl.Template>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <UniformGrid Columns="5">
+                    <UniformGrid Columns="6">
                         <Image Width="150" Height="150" UseLayoutRounding="True">
                             <Image.Source>
-                                <BitmapImage DecodePixelWidth="150" UriSource="{Binding ImageSource}"/>
+                                <BitmapImage DecodePixelWidth="150" UriSource="{Binding ImageThumbnail}"/>
                             </Image.Source>
                         </Image>
+                        <Button Width="100" Height="50" FontSize="30" Style="{StaticResource TransBtnStyle}" ToolTip="查看" Content="&#xe626;" Foreground="#27EA9B" Command="{Binding DataContext.LookImageCommand ,RelativeSource={RelativeSource AncestorType={x:Type Page}}}" CommandParameter="{Binding}"/>
                         <TextBlock Foreground="White" FontSize="16"  ToolTip="作者" Text="{Binding UserNickname}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <TextBlock Foreground="White" FontSize="16" ToolTip="上传时间" Text="{Binding Audittime}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <TextBox ToolTip="图片备注" MaxHeight="160" MinHeight="50" Width="160" Text="{Binding Auditnote}" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center"/>
                         <StackPanel Orientation="Horizontal">
-                            <Button VerticalAlignment="Center" Content="通过"/>
-                            <Button VerticalAlignment="Center" Content="驳回"/>
+                            <Button VerticalAlignment="Center" Style="{StaticResource TransBtnStyle}" Foreground="#27EA9B" ToolTip="通过" FontSize="30" Content="&#xe63d;" Command="{Binding DataContext.PassCommand,RelativeSource={RelativeSource AncestorType=Page}}" CommandParameter="{Binding}"/>
+                            <Button VerticalAlignment="Center" Style="{StaticResource TransBtnStyle}" Foreground="#D8082C" ToolTip="驳回" FontSize="30" Content="&#xe610;" Command="{Binding DataContext.BackCommand,RelativeSource={RelativeSource AncestorType=Page}}" CommandParameter="{Binding}"/>
                         </StackPanel>
                     </UniformGrid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        <Button VerticalAlignment="Bottom" Content="&#xe639;" ToolTip="刷新" Style="{StaticResource  AddImgBtnStyle}" Foreground="#27EA9B" FontSize="60" HorizontalAlignment="Right" Margin="0,0,30,20" Command="{Binding RefreshCommand}">
+            <Button.Effect>
+                <DropShadowEffect Color="Black" Opacity="0.5" ShadowDepth="0" BlurRadius="10" />
+            </Button.Effect>
+        </Button>
     </Grid>
 </Page>

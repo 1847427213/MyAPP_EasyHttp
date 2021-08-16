@@ -5,6 +5,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:EasyHttp.View"
       xmlns:viewmodel="clr-namespace:EasyHttp.ViewModel"
+      xmlns:app="clr-namespace:EasyHttp"
+      xmlns:converter="clr-namespace:EasyHttp.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ImagePage"
@@ -12,6 +14,9 @@
     <Page.DataContext>
         <viewmodel:ImagePageViewModel/>
     </Page.DataContext>
+    <Page.Resources>
+        <converter:MyAppConverter3 x:Key="MyAppConverter3"/>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -30,8 +35,8 @@
                 <RadioButton Content="网络图片" Foreground="#c6c6c6" FontSize="14" GroupName="ImageTab" Style="{StaticResource  ImageTabRadioBtn}" x:Name="NetWork" Command="{Binding GoNetWorkPageCommand}" IsChecked="True"/>
                 <TextBlock Width="2" Background="#c6c6c6" Margin="5,0"/>
                 <RadioButton Content="本地图片" Foreground="#c6c6c6" FontSize="14" GroupName="ImageTab" Style="{StaticResource ImageTabRadioBtn}" x:Name="Local" Command="{Binding GoLocalPageCommand}" />
-                <TextBlock Width="2" Background="#c6c6c6" Margin="5,0"/>
-                <RadioButton Content="图片审核" Foreground="#c6c6c6" FontSize="14" GroupName="ImageTab" Style="{StaticResource ImageTabRadioBtn}" x:Name="Audit" Command="{Binding GoAuditPageCommand}" />
+                <TextBlock Width="2" Background="#c6c6c6" Margin="5,0" DataContext="{x:Static app:MyApp.Instance}" Visibility="{Binding MyApp_User.Identity,Converter={StaticResource MyAppConverter3}}"/>
+                <RadioButton Content="图片审核" Foreground="#c6c6c6" FontSize="14" GroupName="ImageTab" Style="{StaticResource ImageTabRadioBtn}" x:Name="Audit" Command="{Binding DataContext.GoAuditPageCommand,RelativeSource={RelativeSource AncestorType=Page}}" DataContext="{x:Static app:MyApp.Instance}" Visibility="{Binding MyApp_User.Identity,Converter={StaticResource MyAppConverter3}}"/>
             </StackPanel>
             <Label Background="AliceBlue" Height="1" VerticalAlignment="Bottom" Opacity="0.3"/>
         </Grid>

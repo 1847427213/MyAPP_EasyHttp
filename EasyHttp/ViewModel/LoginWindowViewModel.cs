@@ -35,6 +35,7 @@ namespace EasyHttp.ViewModel
             formDataContent.Add(new StringContent(PassWord), "UserPassWord");
             Http http = new Http();
             var request = await http.PostAsync(HttpUrl.User.LoginUrl(), formDataContent);
+            if (string.IsNullOrEmpty(request)) { MessageBox.Show("登陆失败!");return; }
             JObject jobject = JObject.Parse(request);
             var code = jobject.Value<string>("code");
             var message = jobject.Value<string>("message");

@@ -58,17 +58,17 @@ namespace EasyHttp.Util
             try
             {
                 var response = await HttpClient.PostAsync(url, content, TokenSource.Token);
-                var request = await response.Content.ReadAsStringAsync();
-                return request;
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    return await response.Content.ReadAsStringAsync();
+                return string.Empty;
             }
             catch (TaskCanceledException)
             {
-
-                return "Task取消成功";
+                return string.Empty;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return e.Message;
+                return string.Empty;
             }
         }
         public bool Cancel()
@@ -84,6 +84,8 @@ namespace EasyHttp.Util
 
         ~Http()
         {
+            HttpClient?.Dispose();
+            TokenSource?.Dispose();
         }
     }
 }
