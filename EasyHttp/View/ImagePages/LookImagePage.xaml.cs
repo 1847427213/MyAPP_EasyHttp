@@ -30,7 +30,7 @@ namespace EasyHttp.View.ImagePages
         {
             InitializeComponent();
             DataContext = ViewModel = new LookImagePageViewModel();
-            ViewModel.ImageSource =new BitmapImage(new Uri(url));
+            ViewModel.ImageSource = ImageTool.GetBitmapImage2(url);// new BitmapImage(new Uri(url));
         }
         Point MovePoint;
         private void RotateImage(int Angle)

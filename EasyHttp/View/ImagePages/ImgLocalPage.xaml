@@ -25,15 +25,18 @@
                     <Grid Background="Gray" Margin="2,2,0,0">
                         <Image Width="150" Height="150" Margin="5" MouseEnter="Image_MouseEnter" Source="{Binding ImageSource}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.4"/>
                         <Image Width="150" Height="150" Margin="5" RenderOptions.BitmapScalingMode="HighQuality"  UseLayoutRounding="True"  MouseEnter="Image_MouseEnter" Source="{Binding ImageSource}"/>
-
-                        <Border Background="#90A0A5" Margin="5" Opacity="0.7" Visibility="{Binding ShowMenu}"  MouseLeave="Image_MouseLeave">
+                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                            <Button Style="{StaticResource TransBtnStyle}" Padding="0" ToolTip="查看" Content="&#xe626;" Foreground="#27EA9B" Command="{Binding DataContext.LookImageCommand ,RelativeSource={RelativeSource AncestorType={x:Type Page}}}" CommandParameter="{Binding}"/>
+                            <Button Style="{StaticResource TransBtnStyle}" Padding="0" ToolTip="删除" Content="&#xe636;" Foreground="#D8082C" Command="{Binding DataContext.DeleteImageCommand ,RelativeSource={RelativeSource AncestorType={x:Type Page}}}" CommandParameter="{Binding}"/>
+                        </StackPanel>
+                        <!--<Border Background="#90A0A5" Margin="5" Opacity="0.7" Visibility="{Binding ShowMenu}"  MouseLeave="Image_MouseLeave">
                             <UniformGrid  Rows="2" Columns="2" Margin="3">
                                 <Button Style="{StaticResource ImgBtnStyle}" ToolTip="查看" Content="&#xe626;" Foreground="#27EA9B" Command="{Binding DataContext.LookImageCommand ,RelativeSource={RelativeSource AncestorType={x:Type Page}}}" CommandParameter="{Binding}"/>
                                 <Button Style="{StaticResource ImgBtnStyle}" ToolTip="查看" Content="&#xe626;" Foreground="#27EA9B" Command="{Binding DataContext.LookImage1Command ,RelativeSource={RelativeSource AncestorType={x:Type Page}}}"/>
                                 <Button Style="{StaticResource ImgBtnStyle}" ToolTip="下载" Content="&#xe638;" Foreground="#27EA9B" Command="{Binding DataContext.DownLoadImageCommand ,RelativeSource={RelativeSource AncestorType={x:Type Page}}}" CommandParameter="{Binding}"/>
                                 <Button Style="{StaticResource ImgBtnStyle}" ToolTip="删除" Content="&#xe636;" Foreground="#D8082C" Command="{Binding DataContext.DeleteImageCommand ,RelativeSource={RelativeSource AncestorType={x:Type Page}}}" CommandParameter="{Binding}"/>
                             </UniformGrid>
-                        </Border>
+                        </Border>-->
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
