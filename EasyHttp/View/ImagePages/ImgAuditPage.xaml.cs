@@ -35,7 +35,7 @@ namespace EasyHttp.View.ImagePages
             ViewModel.CountSize = count;
             if (ViewportHeight >= 151)
             {
-                if (ViewportHeight + e.VerticalOffset >= e.ExtentHeight && e.ExtentHeight != 0)
+                if (ViewportHeight + e.VerticalOffset >= e.ExtentHeight && e.ExtentHeight != 0&& e.ExtentHeight > ViewportHeight)
                     ViewModel.GetImgAuditList();
             }
         }

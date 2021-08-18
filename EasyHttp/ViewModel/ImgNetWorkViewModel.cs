@@ -47,6 +47,7 @@ namespace EasyHttp.ViewModel
             foreach (var item in NetWorkImage.GetNetWorkImages(result))
             {
                 NetWorkImages.Add(item);
+                await Task.Delay(10);
             };
         }
     }

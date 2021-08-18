@@ -91,6 +91,7 @@ namespace EasyHttp.ViewModel
             foreach (var item in ImgAuditModel.GetImgAuditList(result))
             {
                 ImgAuditModels.Add(item);
+                await Task.Delay(10);
             }
         }
     }

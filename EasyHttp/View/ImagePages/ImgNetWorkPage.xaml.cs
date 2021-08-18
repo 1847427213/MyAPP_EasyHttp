@@ -30,10 +30,11 @@ namespace EasyHttp.View.ImagePages
         private void ItemsControl_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             int ViewportHeight = (int)e.ViewportHeight;
-            ViewModel.CountSize = ViewportHeight / 161 + 1;
+            int ViewportWidth = (int)e.ViewportWidth;
+            ViewModel.CountSize = (ViewportHeight / 161 + 1) * (ViewportWidth / 161 + 1);
             if (ViewportHeight >= 161)
             {
-                if (ViewportHeight + e.VerticalOffset >= e.ExtentHeight && e.ExtentHeight != 0)
+                if (ViewportHeight + e.VerticalOffset >= e.ExtentHeight && e.ExtentHeight != 0 && e.ExtentHeight > ViewportHeight)
                     ViewModel.GetNetWorkImages();
             }
         }
