@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using EasyHttp.Util;
 using EasyHttp.View.ImagePages;
@@ -36,8 +37,7 @@ namespace EasyHttp.ViewModel
         {
             var item = obj as ImgAuditModel;
             if (item == null) return;
-            App.ImgNavigation.Navigation(new LookImagePage($"{ HttpUrl.RootUrl }{item.ImageSource}"));
-
+            App.ImgNavigation.Navigation(new LookImagePage(item.ImageSource));
         }
 
         private void Refresh(object obj)
@@ -78,6 +78,7 @@ namespace EasyHttp.ViewModel
             formDataContent.Add(new StringContent(model.Auditid.ToString()), "auditid");
             formDataContent.Add(new StringContent(model.Auditstate.ToString()), "state");
             formDataContent.Add(new StringContent(model.Auditnote), "note");
+            formDataContent.Add(new StringContent(model.Permissions.Tag.ToString()), "permissions");
             var result = await http.PostAsync(HttpUrl.Image.AuditImage(), formDataContent);
             if (string.IsNullOrEmpty(result)) return false;
             return true;
@@ -87,25 +88,9 @@ namespace EasyHttp.ViewModel
         {
             Http http = new Http();
             var result = await http.GetAsync(HttpUrl.Image.GetAuditList(ImgAuditModels.Count, CountSize));
-            if (!string.IsNullOrEmpty(result))
+            foreach (var item in ImgAuditModel.GetImgAuditList(result))
             {
-                JObject jobject = JObject.Parse(result);
-                foreach (var item in jobject.Value<JArray>("body"))
-                {
-                    var imgpath = $"{ HttpUrl.RootUrl }{item.Value<string>("auditthumbnail")}";
-                    //var stream= await http.HttpClient.GetAsync(imgpath);
-                    var model = new ImgAuditModel();
-                    //model.ImageSource = ImageTool.GetBitmapImage(await stream.Content.ReadAsStreamAsync(), 150);
-                    model.ImageSource = item.Value<string>("auditsource");
-                    model.ImageThumbnail = imgpath;
-                    model.Audittime = item.Value<string>("audittime");
-                    model.Auditnote = item.Value<string>("auditnote") == null ? string.Empty : item.Value<string>("auditnote");
-                    model.Auditid = item.Value<int>("auditid");
-                    model.Auditstate = item.Value<int>("auditstate");
-                    model.UserAccount = item.Value<string>("userAccount");
-                    model.UserNickname = item.Value<string>("userNickname");
-                    ImgAuditModels.Add(model);
-                }
+                ImgAuditModels.Add(item);
             }
         }
     }
@@ -120,6 +105,30 @@ namespace EasyHttp.ViewModel
         public int Auditstate { get; set; }
         public string UserNickname { get; set; }
         public string UserAccount { get; set; }
+        public ComboBoxItem Permissions { get; set; }
         public Visibility ShowLook { get; set; } = Visibility.Collapsed;
+        public static List<ImgAuditModel> GetImgAuditList(string result)
+        {
+            List<ImgAuditModel> models = new List<ImgAuditModel>();
+            if (!string.IsNullOrEmpty(result))
+            {
+                JObject jobject = JObject.Parse(result);
+                foreach (var item in jobject.Value<JArray>("body"))
+                {
+                    models.Add(new ImgAuditModel()
+                    {
+                        ImageSource = $"{ HttpUrl.RootUrl }{item.Value<string>("auditsource")}",
+                        ImageThumbnail = $"{ HttpUrl.RootUrl }{item.Value<string>("auditthumbnail")}",
+                        Audittime = item.Value<string>("audittime"),
+                        Auditnote = item.Value<string>("auditnote") == null ? string.Empty : item.Value<string>("auditnote"),
+                        Auditid = item.Value<int>("auditid"),
+                        Auditstate = item.Value<int>("auditstate"),
+                        UserAccount = item.Value<string>("userAccount"),
+                        UserNickname = item.Value<string>("userNickname")
+                    });
+                }
+            }
+            return models;
+        }
     }
 }

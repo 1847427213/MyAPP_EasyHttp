@@ -50,4 +50,16 @@ namespace EasyHttp.Converters
             throw new NotImplementedException();
         }
     }
+    public class MyAppConverter4 : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return "上传时间："+((DateTime)value).ToString("yyyy-MM-dd HH:mm:ss.ff");
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -23,15 +23,18 @@
             </ItemsControl.Template>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <UniformGrid Columns="6">
-                        <Image Width="150" Height="150" UseLayoutRounding="True">
-                            <Image.Source>
-                                <BitmapImage DecodePixelWidth="150" UriSource="{Binding ImageThumbnail}"/>
-                            </Image.Source>
-                        </Image>
+                    <UniformGrid Columns="7">
+                        <Image Width="150" Height="150" UseLayoutRounding="True" Source="{Binding ImageThumbnail}"/>
                         <Button Width="100" Height="50" FontSize="30" Style="{StaticResource TransBtnStyle}" ToolTip="查看" Content="&#xe626;" Foreground="#27EA9B" Command="{Binding DataContext.LookImageCommand ,RelativeSource={RelativeSource AncestorType={x:Type Page}}}" CommandParameter="{Binding}"/>
                         <TextBlock Foreground="White" FontSize="16"  ToolTip="作者" Text="{Binding UserNickname}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <TextBlock Foreground="White" FontSize="16" ToolTip="上传时间" Text="{Binding Audittime}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock Text="权限:" VerticalAlignment="Center" Foreground="White" FontSize="14" Margin="2"/>
+                            <ComboBox SelectedItem="{Binding Permissions}"  SelectedIndex="0">
+                            <ComboBoxItem Content="用户" Tag="1"/>
+                            <ComboBoxItem Content="游客" Tag="0"/>
+                        </ComboBox>
+                        </StackPanel>
                         <TextBox ToolTip="图片备注" MaxHeight="160" MinHeight="50" Width="160" Text="{Binding Auditnote}" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center"/>
                         <StackPanel Orientation="Horizontal">
                             <Button VerticalAlignment="Center" Style="{StaticResource TransBtnStyle}" Foreground="#27EA9B" ToolTip="通过" FontSize="30" Content="&#xe63d;" Command="{Binding DataContext.PassCommand,RelativeSource={RelativeSource AncestorType=Page}}" CommandParameter="{Binding}"/>
